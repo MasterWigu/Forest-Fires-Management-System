@@ -5,6 +5,8 @@
 	$tipo = $_REQUEST['tipo'];
 
 
+
+
 	try
 	{
 
@@ -28,6 +30,56 @@
 			echo("Morada adicionada");
 		}
 
+		elseif ($tipo == 3) {
+			$numtelefone = $_REQUEST['numtelefone'];
+			$instantechamada = $_REQUEST['instantechamada'];
+			$nomepessoa = $_REQUEST['nomepessoa'];
+			$moradaLocal = $_REQUEST['moradalocal'];
+			$numprocessosocorro = $_REQUEST['numprocessosocorro'];
+
+			$sql = "INSERT INTO eventoemergencia VALUES (:numtelefone, :instantechamada, :nomepessoa, :moradalocal, :numprocessosocorro)";
+
+			$result = $db->prepare($sql);
+
+			$result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada, ':nomepessoa' => $nomepessoa,':moradalocal' => $moradalocal, ':numprocessosocorro' => $numprocessosocorro]);
+
+			echo("Evento de emergencia adicionado");
+
+		}
+
+		elseif ($tipo == 5) {
+			/*$numprocessosocorro = $_REQUEST['numprocessosocorro'];
+			$numtelefone = $_REQUEST['numtelefone'];
+			$instantechamada = $_REQUEST['instantechamada'];
+
+			$sql = "UPDATE eventoemergencia SET numprocessosocorro=':numprocessosocorro'";
+
+			$result = $db->prepare($sql);
+
+			$result->execute([':numprocessosocorro' => $numprocessosocorro, ':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
+
+			echo("Processo de socorro adicionado ao(s) evento(s) de emergencia que o originou(aram)");*/
+		}
+
+		elseif ($tipo == 7) {
+			$nomemeio = $_REQUEST['nomemeio'];
+			$nomeentidade = $_REQUEST['nomeentidade'];
+
+			$nummeio = "SELECT MAX(nummeio) FROM meio WHERE nomeentidade = :nomeentidade";
+			$result = $db->prepare($nummeio);
+			$result->execute([':nomeentidade' => $nomeentidade]);
+
+			if ($nummeio == null)
+				$nummeio = 0;
+
+			$sql = "INSERT INTO meio VALUES (:nummeio, :nomemeio, :nomeentidade)";
+			$result = $db->prepare($sql);
+			$result->execute(['nummeio' => $nummeio + 1, 'nomemeio' => $nomemeio, ':nomeentidade' => $nomeentidade]);
+
+			echo("Meio adicionado");			
+		}
+
+
 		elseif ($tipo == 9) {
 			$nomeentidade = $_REQUEST['nomeentidade'];
 
@@ -49,6 +101,13 @@
 	catch (PDOException $e)
 	{
 		echo("<p>ERROR: {$e->getMessage()}</p>");
+
+		echo("<p></p>");
+
+		        if(isset($_POST)){
+            var_dump($_POST);
+        }
+
 	}
 
 ?>
