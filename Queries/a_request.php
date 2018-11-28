@@ -18,13 +18,15 @@
 
     if ($option == 1) {
         echo("<form action=\"a.php?tipo=1\" method=\"post\">");
-    	echo("<p>What's the new address? <input type=\"text\" name=\"moradalocal\"/></p>");
+    	echo("<p>Nova morada: <input type=\"text\" name=\"moradalocal\"/></p>");
     	echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
     }
+
 
     elseif ($option == 2) {
     	
     }
+
 
     elseif ($option == 3) {
     	echo("<form action=\"a.php?tipo=3\" method=\"post\">");
@@ -59,13 +61,13 @@
         echo("</select>\n");
 
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
-
-
     }
+
 
     elseif ($option == 4) {
 
     }
+
 
     elseif ($option == 5) { /* mostrar todos os eventos de emergencia cujo numprocessosocorro = null */
         /*echo("<form action=\"a.php?tipo=5\" method=\"post\">");
@@ -89,9 +91,11 @@
     	*/
     }
 
+
     elseif ($option == 6) {
     	
     }
+
 
     elseif ($option == 7) {
         echo("<form action=\"a.php?tipo=7\" method=\"post\">");
@@ -110,21 +114,21 @@
         }
         echo("</select>\n");
 
-
-        echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");    	
-
-
+        echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
     }
+
 
     elseif ($option == 8) {
     	
     }
 
+
     elseif ($option == 9) {
     	echo("<form action=\"a.php?tipo=9\" method=\"post\">");
-        echo("<p>What's the new entity's name? <input type=\"text\" name=\"nomeentidade\"/></p>");
+        echo("<p>Nome da nova entidade: <input type=\"text\" name=\"nomeentidade\"/></p>");
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>");
     }
+
 
     else {
 

@@ -2,10 +2,8 @@
     <meta charset="UTF-8">
 	<body>
 <?php
+
 	$tipo = $_REQUEST['tipo'];
-
-
-
 
 	try
 	{
@@ -24,11 +22,16 @@
 			$sql = "INSERT INTO localidade VALUES (:moradalocal)";
 
 			$result = $db->prepare($sql);
-
 			$result->execute([':moradalocal' => $moradalocal]);
 
 			echo("Morada adicionada");
 		}
+
+
+		elseif ($tipo == 2) {
+
+		}
+
 
 		elseif ($tipo == 3) {
 			$numtelefone = $_REQUEST['numtelefone'];
@@ -40,12 +43,16 @@
 			$sql = "INSERT INTO eventoemergencia VALUES (:numtelefone, :instantechamada, :nomepessoa, :moradalocal, :numprocessosocorro)";
 
 			$result = $db->prepare($sql);
-
 			$result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada, ':nomepessoa' => $nomepessoa,':moradalocal' => $moradalocal, ':numprocessosocorro' => $numprocessosocorro]);
 
 			echo("Evento de emergencia adicionado");
+		}
+
+
+		elseif ($tipo == 4) {
 
 		}
+
 
 		elseif ($tipo == 5) {
 			/*$numprocessosocorro = $_REQUEST['numprocessosocorro'];
@@ -61,6 +68,12 @@
 			echo("Processo de socorro adicionado ao(s) evento(s) de emergencia que o originou(aram)");*/
 		}
 
+
+		elseif ($tipo == 6) {
+
+		}
+
+
 		elseif ($tipo == 7) {
 			$nomemeio = $_REQUEST['nomemeio'];
 			$nomeentidade = $_REQUEST['nomeentidade'];
@@ -73,10 +86,16 @@
 				$nummeio = 0;
 
 			$sql = "INSERT INTO meio VALUES (:nummeio, :nomemeio, :nomeentidade)";
+
 			$result = $db->prepare($sql);
 			$result->execute(['nummeio' => $nummeio + 1, 'nomemeio' => $nomemeio, ':nomeentidade' => $nomeentidade]);
 
 			echo("Meio adicionado");			
+		}
+
+
+		elseif ($tipo == 8) {
+
 		}
 
 
@@ -86,27 +105,29 @@
 			$sql = "INSERT INTO entidademeio VALUES (:nomeentidade)";
 
 			$result = $db->prepare($sql);
-
 			$result->execute([':nomeentidade' => $nomeentidade]);
 
 			echo("Entidade adicionada");
 		}
 
+
 		else {
 
 		}
 
+
 		$db = null;
 	}
+
 	catch (PDOException $e)
 	{
 		echo("<p>ERROR: {$e->getMessage()}</p>");
 
-		echo("<p></p>");
+		/*echo("<p></p>");
 
-		        if(isset($_POST)){
+		if(isset($_POST)){
             var_dump($_POST);
-        }
+        }*/
 
 	}
 
