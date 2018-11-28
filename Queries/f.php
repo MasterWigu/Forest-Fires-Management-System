@@ -38,6 +38,9 @@
     {
         echo("<p>ERROR: {$e->getMessage()}</p>");
     }
-?>
+?>  
+    <br>
+    <button onclick="location.href = 'menu.php';">Voltar</button>
     </body>
+
 </html>

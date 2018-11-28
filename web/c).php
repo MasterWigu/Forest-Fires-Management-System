@@ -19,7 +19,7 @@
 		$result->execute();
 
 		echo("<table border=\"1\">\n");
-		echo("<tr><td>Numero de Processo de Socorro</td><td>Nome de Entidade</td><td>Numero Meio</td></tr>\n");
+		echo("<tr><td>Numero do Processo de Socorro</td><td>Nome da Entidade</td><td>Numero do Meio</td></tr>\n");
 
 		foreach($result as $row)
 		{

@@ -12,26 +12,46 @@
 		$db = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		$sql = "SELECT numprocessosocorro, nomeentidade, nummeio FROM acciona;";
+		$option = $_REQUEST['option'];
 
-		$result = $db->prepare($sql);
+		if ($option == 1) {
 
-		$result->execute();
+			$sql = "SELECT nomeentidade, nummeio, nomemeio FROM meio;";
+			$result = $db->prepare($sql);
+			$result->execute();
 
-		echo("<table border=\"1\">\n");
-		echo("<tr><td>Numero de Processo de Socorro</td><td>Nome de Entidade</td><td>Numero Meio</td></tr>\n");
+			echo("<table border=\"1\">\n");
+			echo("<tr><td>Nome da Entidade</td><td>Numero do Meio</td><td>Nome do Meio</td></tr>\n");
 
-		foreach($result as $row)
-		{
-            echo("<tr><td>");
-            echo($row["numprocessosocorro"]);
-            echo("</td><td>");
-            echo($row["nomeentidade"]);
-            echo("</td><td>");
-            echo($row["nummeio"]);
-            echo("</td></tr>");
+			foreach($result as $row)
+			{
+	            echo("<tr><td>");
+	            echo($row["nomeentidade"]);
+	            echo("</td><td>");
+	            echo($row["nummeio"]);
+	            echo("</td><td>");
+	            echo($row["nomemeio"]);
+	            echo("</td></tr>");
+			}
+			echo("</table>\n");
+
 		}
-		echo("</table>\n");
+		else {
+			$sql = "SELECT numprocessosocorro FROM processosocorro;";
+			$result = $db->prepare($sql);
+			$result->execute();
+
+			echo("<table border=\"1\">\n");
+			echo("<tr><td>Numero do Processo de Socorro</td></tr>\n");
+
+			foreach($result as $row)
+			{
+	            echo("<tr><td>");
+	            echo($row["numprocessosocorro"]);
+	            echo("</td></tr>");
+			}
+			echo("</table>\n");
+		}
 
 		$db = null;
 	}
@@ -41,5 +61,7 @@
 	}
 
 ?>
+    <br>
+    <button onclick="location.href = 'menu.php';">Voltar</button>
 </body>
 </html>

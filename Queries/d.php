@@ -39,7 +39,7 @@
             }
             echo($numprocessosocorro);
             echo($numprocessosocorro1);
-            echo($numprocessosocorro2);*/
+            echo($numprocessosocorro2);
             echo("teste1");
 
             $sql = "select exists (select 1 from processosocorro where numprocessosocorro = :numprocessosocorro)";
@@ -56,14 +56,23 @@
                 $sql = "insert into processosocorro values (:numprocessosocorro)";
                 $result = $db->prepare($sql);
                 $result->execute([':numprocessosocorro' => $numprocessosocorro]);
-            }
+            }*/
 
-            echo("teste4");
-            $sql = "update eventoemergencia set numprocessosocorro = :numprocessosocorro where numtelefone = :numtelefone and instantechamada = :instantechamada";
+            $sql = "select numprocessosocorro from eventoemergencia where numtelefone = :numtelefone and instantechamada = :instantechamada";
 
             $result = $db->prepare($sql);
-            $result->execute([':numprocessosocorro' => $numprocessosocorro, ':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
-        
+            $result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
+
+            if ($result == "null") {
+                echo("teste4");
+                $sql = "update eventoemergencia set numprocessosocorro = :numprocessosocorro where numtelefone = :numtelefone and instantechamada = :instantechamada";
+
+                $result = $db->prepare($sql);
+                $result->execute([':numprocessosocorro' => $numprocessosocorro, ':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
+
+            } else {
+                echo("O evento de emergencia selecionado ja possui um numero de processo de socorro");
+            }
             echo("teste5");
         }
 
@@ -75,5 +84,7 @@
         echo("<p>ERROR: {$e->getMessage()}</p>");
     }
 ?>
+    <br>
+    <button onclick="location.href = 'menu.php';">Voltar</button>
     </body>
 </html>

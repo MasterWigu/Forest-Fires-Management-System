@@ -18,7 +18,7 @@
         $result->execute([':numprocessosocorro' => $numprocessosocorro]);
 
 		echo("<table border=\"1\">\n");
-		echo("<tr><td>Numero de Processo de Socorro</td><td>Nome de Entidade</td><td>Numero Meio</td></tr>\n");
+		echo("<tr><td>Numero do Processo de Socorro</td><td>Nome da Entidade</td><td>Numero do Meio</td></tr>\n");
 
 		foreach($result as $row)
 		{
@@ -39,5 +39,7 @@
         echo("<p>ERROR: {$e->getMessage()}</p>");
     }
 ?>
+        <br>
+        <button onclick="location.href = 'menu.php';">Voltar</button>
     </body>
 </html>
