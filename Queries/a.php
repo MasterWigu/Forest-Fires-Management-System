@@ -2,10 +2,8 @@
     <meta charset="UTF-8">
 	<body>
 <?php
+	$tipo = $_REQUEST['tipo'];
 
-	$opcao = $_REQUEST['opcao'];
-	$moradalocal = $_REQUEST['moradalocal'];
-	$nomeentidade = $_REQUEST['nomeentidade'];
 
 	try
 	{
@@ -14,12 +12,12 @@
 		$user ="ist187689";
 		$password = "amarelo23";
 		$dbname = $user;
-
 		$db = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-		if ($opcao == 1) {
+		if ($tipo == 1) {
+			$moradalocal = $_REQUEST['moradalocal'];
 		
 			$sql = "INSERT INTO localidade VALUES (:moradalocal)";
 
@@ -30,7 +28,8 @@
 			echo("Morada adicionada");
 		}
 
-		elseif ($opcao == 9) {
+		elseif ($tipo == 9) {
+			$nomeentidade = $_REQUEST['nomeentidade'];
 
 			$sql = "INSERT INTO entidademeio VALUES (:nomeentidade)";
 

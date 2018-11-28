@@ -5,10 +5,9 @@
 	$option = $_REQUEST['option'];
 
     if ($option == 1) {
-        echo("<form action=\"a.php\" method=\"post\">");
+        echo("<form action=\"a.php?tipo=1\" method=\"post\">");
     	echo("<p>What's the new address? <input type=\"text\" name=\"moradalocal\"/></p>");
-    	echo("<p><input type=\"submit\" value=\"Submit\"/></p>");
-    	echo("<a href=\"a.php?opcao=1\"></a></form>\n");
+    	echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
     }
 
     elseif ($option == 2) {
@@ -40,10 +39,9 @@
     }
 
     elseif ($option == 9) {
-    	echo("<form action=\"a.php\" method=\"post\">");
+    	echo("<form action=\"a.php?tipo=9\" method=\"post\">");
         echo("<p>What's the new entity's name? <input type=\"text\" name=\"nomeentidade\"/></p>");
-        echo("<p><input type=\"submit\" value=\"Submit\"/></p>");
-        echo("<a href=\"a.php?opcao=9\"></a></form>\n");
+        echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>");
     }
 
     else {
