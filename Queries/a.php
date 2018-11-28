@@ -29,7 +29,26 @@
 
 
 		elseif ($tipo == 2) {
+			$moradalocal = $_REQUEST['moradalocal'];
 
+			$sql = "SELECT DISTINCT numprocessosocorro FROM eventoemergencia WHERE moradalocal = :moradalocal";
+
+			$result = $db->prepare($sql);
+			$result->execute([':moradalocal' => $moradalocal]);
+
+			foreach($result as $row) {
+				$sql = "DELETE FROM processosocorro WHERE numprocessosocorro = :numprocessosocorro";
+
+				$result = $db->prepare($sql);
+				$result->execute([':numprocessosocorro' => $row["numprocessosocorro"]]);
+			}
+
+			$sql = "DELETE FROM localidade WHERE moradalocal = :moradalocal";
+
+			$result = $db->prepare($sql);
+			$result->execute([':moradalocal' => $moradalocal]);
+
+			echo("Morada removida");
 		}
 
 
@@ -95,7 +114,15 @@
 
 
 		elseif ($tipo == 8) {
+			$nummeio = $_REQUEST['nummeio'];
+			$nomeentidade = $_REQUEST['nomeentidade'];
 
+			$sql = "DELETE FROM meio WHERE nomeentidade = :nomeentidade AND nummeio = :nummeio";
+
+			$result = $db->prepare($sql);
+			$result->execute([':nomeentidade' => $nomeentidade, 'nummeio' => $nummeio]);
+
+			echo("Meio removido");
 		}
 
 
@@ -112,7 +139,14 @@
 
 
 		else {
+			$nomeentidade = $_REQUEST['nomeentidade'];
 
+			$sql = "DELETE FROM entidademeio WHERE nomeentidade = :nomeentidade";
+
+			$result = $db->prepare($sql);
+			$result->execute([':nomeentidade' => $nomeentidade]);
+
+			echo("Entidade removida");
 		}
 
 
@@ -123,11 +157,11 @@
 	{
 		echo("<p>ERROR: {$e->getMessage()}</p>");
 
-		/*echo("<p></p>");
+		echo("<p></p>");
 
-		if(isset($_POST)){
-            var_dump($_POST);
-        }*/
+		if(isset($_REQUEST)){
+            var_dump($_REQUEST);
+        }
 
 	}
 

@@ -24,7 +24,9 @@
 
 
     elseif ($option == 2) {
-    	
+        echo("<form action=\"a.php?tipo=2\" method=\"post\">");
+        echo("<p>Morada a remover: <input type=\"text\" name=\"moradalocal\"/></p>");
+        echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
     }
 
 
@@ -119,7 +121,10 @@
 
 
     elseif ($option == 8) {
-    	
+    	echo("<form action=\"a.php?tipo=8\" method=\"post\">");
+        echo("<p>Numero do meio a remover: <input type=\"text\" name=\"nummeio\"/></p>");
+        echo("<p>Nome da entidade a que pertence o meio a remover: <input type=\"text\" name=\"nomeentidade\"/></p>"); /* NAO ESTA COM COMBO BOX PORQUE OS ESPACOS ESTAO A LIXAR TUDO */
+        echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
     }
 
 
@@ -131,7 +136,9 @@
 
 
     else {
-
+        echo("<form action=\"a.php?tipo=10\" method=\"post\">");
+        echo("<p>Nome da entidade a remover: <input type=\"text\" name=\"nomeentidade\"/></p>");
+        echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>");
     }
 
 
