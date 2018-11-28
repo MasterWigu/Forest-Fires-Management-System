@@ -34,18 +34,31 @@ def getSegmentos(numCamara, numSegmentos):
 
 def createIntervalwDate(time0):
 	start = random.uniform(12, time0)
-	end = random.uniform(start+0.15, start) #intervalo pode ter no max aprox 4 dias
+	end = random.uniform(time0, 1) #intervalo pode ter no max aprox 4 dias
 
 	date2 = random.uniform(12, 1)
+	if start > end:
+		return [end, start, date2]
+
+
 	return [start, end, date2]
 
 def createIntervalwInterval(start, end):
 	start2 = random.uniform(end, start)
+	end2 = random.uniform(end, start)
 
-	temp = start2+0.15#intervalo pode ter no max aprox 4 dias ou ate end (o que for menor)
+	'''temp = start2+0.15#intervalo pode ter no max aprox 4 dias ou ate end (o que for menor)
 	if temp > end:
 		temp = end
-	end2 = random.uniform(temp, start2)
+	end2 = random.uniform(temp, start2)'''
+	stTemp = createDateTime(start2)
+	endTemp = createDateTime(end2)
+
+
+	if stTemp > endTemp:
+		return (end2, start2)
+
+
 	return (start2, end2)
 
 

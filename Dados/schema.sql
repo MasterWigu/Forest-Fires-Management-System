@@ -32,7 +32,7 @@ create table camara(
 );
 
 create table video(
-    dataHoraInicio timestamp not null, ---- without time zone (necessario por ???)
+    dataHoraInicio timestamp not null,
     dataHoraFim timestamp not null,
     numCamara int not null,
     constraint pk_video primary key(dataHoraInicio, numCamara),
@@ -116,7 +116,7 @@ create table meioSocorro(
 create table transporta(
     numMeio int not null,
     nomeEntidade varchar(80) not null,
-    numVitimas int not null, ---- default 0 (fazer default = 0 ???)
+    numVitimas int not null default 0, ---- default 0 (fazer default = 0 ???)
     numProcessoSocorro int not null,
     constraint pk_transporta primary key(numMeio, nomeEntidade, numProcessoSocorro),
     constraint fk_transporta_meioSocorro foreign key(numMeio, nomeEntidade) references meioSocorro(numMeio, nomeEntidade),
@@ -158,7 +158,9 @@ create table audita(
     texto text,
     constraint pk_audita primary key(idCoordenador, numMeio, nomeEntidade, numProcessoSocorro),
     constraint fk_audita_acciona foreign key(numMeio, nomeEntidade, numProcessoSocorro) references acciona(numMeio, nomeEntidade, numProcessoSocorro),
-    constraint fk_audita_coordenador foreign key(idCoordenador) references coordenador(idCoordenador)
+    constraint fk_audita_coordenador foreign key(idCoordenador) references coordenador(idCoordenador),
+    check (datahoraInicio < datahoraFim),
+    check (datahoraFim < dataAuditoria)
 );
 
 create table solicita(
@@ -169,5 +171,6 @@ create table solicita(
     dataHoraFim timestamp not null,    ---- restricoes
     constraint pk_solicita primary key(idCoordenador, dataHoraInicioVideo, numCamara),
     constraint fk_solicita_coordenador foreign key(idCoordenador) references coordenador(idCoordenador),
-    constraint fk_solicita_video foreign key(dataHoraInicioVideo, numCamara) references video(dataHoraInicio, numCamara)
+    constraint fk_solicita_video foreign key(dataHoraInicioVideo, numCamara) references video(dataHoraInicio, numCamara),
+    check (datahoraInicio < datahoraFim)
 );
