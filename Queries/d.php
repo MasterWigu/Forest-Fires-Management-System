@@ -40,40 +40,36 @@
             echo($numprocessosocorro);
             echo($numprocessosocorro1);
             echo($numprocessosocorro2);
-            echo("teste1");
+            echo("teste1");*/
 
-            $sql = "select exists (select 1 from processosocorro where numprocessosocorro = :numprocessosocorro)";
+            $sql = "select * from processosocorro where numprocessosocorro = :numprocessosocorro";
 
             $result = $db->prepare($sql);
             $result->execute([':numprocessosocorro' => $numprocessosocorro]);
 
-            echo("teste2");
-            echo($result);
-            echo("teste2b");
-
-            if ($result == FALSE) {
+            if ($result->rowCount() == 0) {
                 echo("teste3");
                 $sql = "insert into processosocorro values (:numprocessosocorro)";
                 $result = $db->prepare($sql);
                 $result->execute([':numprocessosocorro' => $numprocessosocorro]);
-            }*/
+            }
 
             $sql = "select numprocessosocorro from eventoemergencia where numtelefone = :numtelefone and instantechamada = :instantechamada";
 
             $result = $db->prepare($sql);
             $result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
 
-            if ($result == "null") {
-                echo("teste4");
+            if ($result->fetch()['numprocessosocorro'] == null) {
                 $sql = "update eventoemergencia set numprocessosocorro = :numprocessosocorro where numtelefone = :numtelefone and instantechamada = :instantechamada";
 
                 $result = $db->prepare($sql);
                 $result->execute([':numprocessosocorro' => $numprocessosocorro, ':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
 
+                echo("Numero de processo de socorro associado ao evento de emergencia");
+
             } else {
                 echo("O evento de emergencia selecionado ja possui um numero de processo de socorro");
             }
-            echo("teste5");
         }
 
 
