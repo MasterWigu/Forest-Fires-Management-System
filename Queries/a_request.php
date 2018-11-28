@@ -136,5 +136,8 @@
 
 
 ?>
+    
+    <br>
+    <button onclick="location.href = 'menu.php';">Voltar</button>
     </body>
 </html>
