@@ -44,9 +44,21 @@
 
         else {
         	echo("<form action=\"d.php?tipo=2\" method=\"post\">");
-            echo("<p>What's the Number of Process: <input type=\"text\" name=\"numprocessosocorro\"/></p>");
-            echo("<p>What's the number of the Vehicle: <input type=\"text\" name=\"nummeio\"/></p>");
-            echo("<p>What's the entity of the Vehicle: <input type=\"text\" name=\"nomeentidade\"/></p>");
+            echo("<p>What's the Telephone Number: <input type=\"text\" name=\"numtelefone\"/></p>");
+            echo("<p>What's the time and date of the Event[yyyy-mm-dd hh:mm:ss]: <input type=\"text\" name=\"instantechamada\"/></p>");
+             
+            $sql = "SELECT numprocessosocorro FROM processosocorro ORDER BY numprocessosocorro ASC";
+            $result = $db->prepare($sql);
+            $result->execute();
+
+            echo ("<p>What's the Number of Process:");
+            /*echo("<select type=\"text\" name=\"numprocessosocorro1\">\n");
+            foreach($result as $row) {
+                echo("<option value={$row['numprocessosocorro']}>{$row['numprocessosocorro']}</option></p>");
+            }
+
+            echo("</select><p> or fill in: ");*/
+            echo("<input type=\"text\" name=\"numprocessosocorro\"/></p>\n");
             echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>");
         }
     }

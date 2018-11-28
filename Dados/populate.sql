@@ -784,7 +784,6 @@ insert into vigia values ('Assequins', 98);
 insert into vigia values ('Maria Vinagre', 14);
 
 
-insert into processoSocorro values (0);
 insert into processoSocorro values (165064573);
 insert into processoSocorro values (800639973);
 insert into processoSocorro values (670564688);
@@ -912,7 +911,7 @@ insert into eventoEmergencia values (213644462, '2018-06-21 09:15:18', 'Fernanda
 insert into eventoEmergencia values (213644462, '2018-06-07 19:34:47', 'Patricia Castro', 'Casal da Rola', 48781742);
 insert into eventoEmergencia values (916768832, '2018-06-08 20:49:54', 'Miguel Pires', 'Esperanca (Ourem)', 642931335);
 insert into eventoEmergencia values (961387124, '2018-10-21 14:34:03', 'Nuno Rebelo', 'Covilha (Povoa de Varzim)', 515027876);
-insert into eventoEmergencia values (213428309, '2018-07-23 18:14:05', 'Andre Lima', 'Caminho Largo', 0);
+insert into eventoEmergencia values (213428309, '2018-07-23 18:14:05', 'Andre Lima', 'Caminho Largo', null);
 insert into eventoEmergencia values (961855757, '2018-09-15 13:31:47', 'Armando Matias', 'Monchique', 557984031);
 insert into eventoEmergencia values (918357484, '2018-03-14 19:51:32', 'Margarida Caetano', 'Agra (Amorim)', 931423939);
 insert into eventoEmergencia values (935136957, '2018-07-02 09:34:19', 'Frederico Mario', 'Aires (Setubal)', 720860137);
@@ -926,13 +925,13 @@ insert into eventoEmergencia values (934508609, '2018-07-18 13:31:28', 'Julia Cu
 insert into eventoEmergencia values (969202049, '2018-02-07 19:29:20', 'Duarte Lopes', 'Burgada', 630070396);
 insert into eventoEmergencia values (919266000, '2018-05-26 02:13:39', 'Fabio Silva', 'Oliveira do Hospital', 50496806);
 insert into eventoEmergencia values (969880251, '2018-07-19 19:55:01', 'Barbara Pedro', 'Muleneta', 10293861);
-insert into eventoEmergencia values (213644462, '2018-02-20 11:55:14', 'Simao Nascimento', 'Fontainhas (Amorim)', 0);
+insert into eventoEmergencia values (213644462, '2018-02-20 11:55:14', 'Simao Nascimento', 'Fontainhas (Amorim)', null);
 insert into eventoEmergencia values (211226713, '2018-05-20 11:29:05', 'Clara Barros', 'Bairro de Almodena', 279280116);
 insert into eventoEmergencia values (932935737, '2018-05-26 19:29:03', 'Vanessa Feio', 'Miratejo', 68587744);
 insert into eventoEmergencia values (913530302, '2018-02-20 11:55:14', 'Laura Jordao', 'Granja de Alpriate', 467622111);
 insert into eventoEmergencia values (215766761, '2018-02-26 15:32:35', 'Mario Pacheco', 'Miratejo', 954061463);
 insert into eventoEmergencia values (919793629, '2018-06-13 22:43:18', 'Rodolfo Dias', 'Castelhanas', 233547212);
-insert into eventoEmergencia values (219531745, '2018-08-18 14:38:15', 'Barbara Gomes', 'Castelo Picao', 0);
+insert into eventoEmergencia values (219531745, '2018-08-18 14:38:15', 'Barbara Gomes', 'Castelo Picao', null);
 insert into eventoEmergencia values (215766761, '2018-08-01 10:36:32', 'Catia Pires', 'Moimento (Fatima)', 684927329);
 insert into eventoEmergencia values (912688870, '2018-02-27 03:52:27', 'Ian Mata', 'Gestrins', 248058284);
 insert into eventoEmergencia values (912097977, '2018-05-20 11:29:05', 'Rodolfo Abreu', 'Carregosa (Povoa de Varzim)', 34419742);
@@ -975,10 +974,10 @@ insert into eventoEmergencia values (969754623, '2018-11-23 18:54:22', 'Vitor Ma
 insert into eventoEmergencia values (213428309, '2018-02-24 03:08:23', 'Alice Maia', 'Cadilhe', 791096809);
 insert into eventoEmergencia values (969700793, '2018-02-21 14:04:33', 'Graca Sousa', 'Baldoiaa)', 342646187);
 insert into eventoEmergencia values (913530302, '2018-11-20 08:42:37', 'Ana Correia', 'Aldeia (Agucadoura)', 547862477);
-insert into eventoEmergencia values (211254795, '2018-09-17 19:28:22', 'Antonio Patricio', 'Mourilhe (Povoa de Varzim)', 0);
+insert into eventoEmergencia values (211254795, '2018-09-17 19:28:22', 'Antonio Patricio', 'Mourilhe (Povoa de Varzim)', null);
 insert into eventoEmergencia values (214984965, '2018-04-06 15:31:03', 'Julia Pedreira', 'Moita do Boi', 88647599);
 insert into eventoEmergencia values (218710096, '2018-10-09 15:36:18', 'Alice Neves', 'Casais Brancos (Atouguia da Baleia)', 996565706);
-insert into eventoEmergencia values (215766761, '2018-02-24 03:08:23', 'Emanuel Borges', 'Antoes', 0);
+insert into eventoEmergencia values (215766761, '2018-02-24 03:08:23', 'Emanuel Borges', 'Antoes', null);
 insert into eventoEmergencia values (916765389, '2018-06-10 05:09:04', 'Fernanda Sa', 'Caminho Largo', 760971628);
 insert into eventoEmergencia values (911543757, '2018-11-24 03:34:09', 'Paulo Maia', 'Maria Vinagre', 149656775);
 insert into eventoEmergencia values (932935737, '2018-06-10 11:09:49', 'Duarte Nascimento', 'Mourilhe (Povoa de Varzim)', 74238776);
