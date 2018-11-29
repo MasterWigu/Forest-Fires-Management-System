@@ -2,6 +2,7 @@
     <body>
 <?php
     $moradalocal = $_REQUEST['moradalocal'];
+    echo("<h3>Meios de socorro accionados em processos de socorro originados em </h3>");
     try
     {
         $host = "db.ist.utl.pt";

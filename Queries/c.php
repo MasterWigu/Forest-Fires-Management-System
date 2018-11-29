@@ -15,7 +15,7 @@
 		$option = $_REQUEST['option'];
 
 		if ($option == 1) {
-
+			echo("<h3>Listagem dos meios e das entidades a que pertencem</h3>");
 			$sql = "SELECT nomeentidade, nummeio, nomemeio FROM meio;";
 			$result = $db->prepare($sql);
 			$result->execute();
@@ -37,6 +37,7 @@
 
 		}
 		else {
+			echo("<h3>Listagem de todos os processos de socorro</h3>");
 			$sql = "SELECT numprocessosocorro FROM processosocorro;";
 			$result = $db->prepare($sql);
 			$result->execute();

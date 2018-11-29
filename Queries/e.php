@@ -2,6 +2,7 @@
     <body>
 <?php
     $numprocessosocorro = $_REQUEST['numprocessosocorro'];
+    echo("<h3>Listagem dos meios associados ao processo de socorro </h3>");
     try
     {
         $host = "db.ist.utl.pt";
