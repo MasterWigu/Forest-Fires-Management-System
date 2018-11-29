@@ -3,6 +3,44 @@
 	<body>
 <?php
 
+	function deleteevento($numtelefone, $instantechamada, $db) {
+		#para apagar evento: ver processosocorro associado, ver se so esta ligado a esse evento. se sim, apaga processo e, consegquentemente (cascade), evento, se nao, apenas apaga evento
+		$sql = "SELECT DISTINCT numprocessosocorro FROM eventoemergencia WHERE numtelefone = :numtelefone AND instantechamada = :instantechamada";
+
+		$result = $db->prepare($sql);
+		$result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
+		$numprocessosocorro = $result->fetch()['numprocessosocorro'];
+
+		if ($numprocessosocorro != null) {
+
+			$sql = "SELECT COUNT(numprocessosocorro) AS count FROM eventoemergencia WHERE numprocessosocorro = :numprocessosocorro GROUP BY numprocessosocorro";
+
+			$result = $db->prepare($sql);
+			$result->execute([':numprocessosocorro' => $numprocessosocorro]);
+
+			if ($result->fetch()['count'] == 1) {
+				$sql = "DELETE FROM processosocorro WHERE numprocessosocorro = :numprocessosocorro";
+
+				$result = $db->prepare($sql);
+				$result->execute([':numprocessosocorro' => $numprocessosocorro]);
+			}
+			else {
+				$sql = "DELETE FROM eventoemergencia WHERE numprocessosocorro = :numprocessosocorro";
+
+				$result = $db->prepare($sql);
+				$result->execute([':numprocessosocorro' => $numprocessosocorro]);
+			}
+		}
+		else  {
+			$sql = "DELETE FROM eventoemergencia WHERE numtelefone = :numtelefone AND instantechamada = :instantechamada";
+
+			$result = $db->prepare($sql);
+			$result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
+		}
+	}
+
+
+
 	$tipo = $_REQUEST['tipo'];
 
 	try
@@ -29,18 +67,17 @@
 
 
 		elseif ($tipo == 2) {
+
+
 			$moradalocal = $_REQUEST['moradalocal'];
 
-			$sql = "SELECT DISTINCT numprocessosocorro FROM eventoemergencia WHERE moradalocal = :moradalocal";
+			$sql = "SELECT DISTINCT numtelefone, instantechamada FROM eventoemergencia WHERE moradalocal = :moradalocal";
 
 			$result = $db->prepare($sql);
 			$result->execute([':moradalocal' => $moradalocal]);
 
-			foreach($result as $row) {
-				$sql = "DELETE FROM processosocorro WHERE numprocessosocorro = :numprocessosocorro";
-
-				$result = $db->prepare($sql);
-				$result->execute([':numprocessosocorro' => $row["numprocessosocorro"]]);
+			foreach ($result as $row) {
+				deleteevento($row['numtelefone'], $row['instantechamada'], $db);
 			}
 
 			$sql = "DELETE FROM localidade WHERE moradalocal = :moradalocal";
@@ -69,26 +106,51 @@
 
 
 		elseif ($tipo == 4) {
+			$numtelefone = $_REQUEST['numtelefone'];
+			$instantechamada = $_REQUEST['instantechamada'];
+			deleteevento($numtelefone, $instantechamada, $db);
 
+			echo("Evento de emergencia removido");
 		}
 
 
 		elseif ($tipo == 5) {
-			/*$numprocessosocorro = $_REQUEST['numprocessosocorro'];
+			$numprocessosocorro = $_REQUEST['numprocessosocorro'];
 			$numtelefone = $_REQUEST['numtelefone'];
 			$instantechamada = $_REQUEST['instantechamada'];
 
-			$sql = "UPDATE eventoemergencia SET numprocessosocorro=':numprocessosocorro'";
+			$sql = "select numprocessosocorro from eventoemergencia where numtelefone = :numtelefone and instantechamada = :instantechamada";
 
-			$result = $db->prepare($sql);
+            $result = $db->prepare($sql);
+            $result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
 
-			$result->execute([':numprocessosocorro' => $numprocessosocorro, ':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
+            if ($result->fetch()['numprocessosocorro'] == null) {
 
-			echo("Processo de socorro adicionado ao(s) evento(s) de emergencia que o originou(aram)");*/
+				$sql = "INSERT INTO processosocorro VALUES (:numprocessosocorro)";
+				$result = $db->prepare($sql);
+				$result->execute([':numprocessosocorro' => $numprocessosocorro]);
+
+
+				$sql = "UPDATE eventoemergencia SET numprocessosocorro = :numprocessosocorro WHERE numtelefone = :numtelefone AND instantechamada = :instantechamada";
+				$result = $db->prepare($sql);
+				$result->execute([':numprocessosocorro' => $numprocessosocorro, ':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
+
+				echo("Processo de socorro adicionado ao(s) evento(s) de emergencia que o originou(aram)");
+			}
+			else {
+				echo("O evento de emergencia selecionado ja possui um processo de socorro associado");
+			}
 		}
 
 
 		elseif ($tipo == 6) {
+			$numprocessosocorro = $_REQUEST['numprocessosocorro'];
+			$sql = "DELETE FROM processosocorro WHERE numprocessosocorro = :numprocessosocorro";
+
+			$result = $db->prepare($sql);
+			$result->execute([':numprocessosocorro' => $numprocessosocorro]);
+
+			echo("Processo de socorro removido");
 
 		}
 

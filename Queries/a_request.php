@@ -45,7 +45,7 @@
         echo ("<p>Local do evento de emergencia: ");
         echo("<select type=\"text\" name=\"moradalocal\">\n");
         foreach($result as $row) {
-            echo("<option value={$row['moradalocal']}>{$row['moradalocal']}</option></p>");
+            echo("<option value='{$row['moradalocal']}'>{$row['moradalocal']}</option></p>");
         }
         echo("</select>\n");
 
@@ -55,10 +55,10 @@
         $result->execute();
 
         /* COMBO BOX PARA ESCOLHER PROCESSO */
-        echo ("<p>Numero do processo de socorro originado: ");
+        echo ("<p>Numero do processo de socorro originado (opcional): ");
         echo("<select type=\"text\" name=\"numprocessosocorro\">\n");
         foreach($result as $row) {
-            echo("<option value={$row['numprocessosocorro']}>{$row['numprocessosocorro']}</option></p>");
+            echo("<option value='{$row['numprocessosocorro']}'>{$row['numprocessosocorro']}</option></p>");
         }
         echo("</select>\n");
 
@@ -67,36 +67,73 @@
 
 
     elseif ($option == 4) {
+        echo("<form action=\"a.php?tipo=4\" method=\"post\">");
+
+        echo("<p>Numero de telefone: <input type=\"text\" name=\"numtelefone\"/></p>");
+        echo("<p>Data e hora a que a chamada foi efetuada: <input type=\"text\" name=\"instantechamada\"/></p>");
+        echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
 
     }
 
 
     elseif ($option == 5) { /* mostrar todos os eventos de emergencia cujo numprocessosocorro = null */
-        /*echo("<form action=\"a.php?tipo=5\" method=\"post\">");
+        echo("<form action=\"a.php?tipo=5\" method=\"post\">");
 
         echo("<p>Numero do processo de socorro originado: <input type=\"text\" name=\"numprocessosocorro\"/></p>");
 
-        $sql = "SELECT numtelefone, instantechamada FROM eventoemergencia";
+
+        /* COMBO BOX PARA ESCOLHER PROCESSO */
+        /*BOA SORTE COM ISSO*/
+        
+        echo ("<p>Evento de emergencia que originou o processo de socorro: "); /* DEPOIS VAI TER QUE SER PARA MAIS QUE UM EVENTO DE EMERGENCIA */
+        $sql = "SELECT numtelefone FROM eventoemergencia ORDER BY numtelefone ASC";
         $result = $db->prepare($sql);
         $result->execute();
 
         /* COMBO BOX PARA ESCOLHER PROCESSO */
-        /*echo ("<p>Evento de emergencia que originou o processo de socorro: "); /* DEPOIS VAI TER QUE SER PARA MAIS QUE UM EVENTO DE EMERGENCIA */
-        /*echo("<select type=\"text\" name=\"numtelefone, instantechamada\">\n");
+        echo ("<p>Numero de telefone do evento: ");
+        echo("<select type=\"text\" name=\"numtelefone\">\n");
         foreach($result as $row) {
-            echo("<option value={$row['numtelefone', 'instantechamada']}>{$row['numtelefone', 'instantechamada']}</option></p>");
+            echo("<option value='{$row['numtelefone']}'>{$row['numtelefone']}</option></p>");
         }
         echo("</select>\n");
 
+        $sql = "SELECT instantechamada FROM eventoemergencia ORDER BY instantechamada ASC";
+        $result = $db->prepare($sql);
+        $result->execute();
+
+        /* COMBO BOX PARA ESCOLHER PROCESSO */
+        echo ("<p>Data e hora do envento de emergencia: ");
+        echo("<select type=\"text\" name=\"instantechamada\">\n");
+        foreach($result as $row) {
+            echo("<option value='{$row['instantechamada']}'>{$row['instantechamada']}</option></p>");
+        }
+        echo("</select>\n");
+        /*echo("<p>Numero de telefone: <input type=\"text\" name=\"numtelefone\"/></p>");
+        echo("<p>Data e hora a que a chamada foi efetuada: <input type=\"text\" name=\"instantechamada\"/></p>");**/
+
 
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
-    	*/
     }
 
 
     elseif ($option == 6) {
-    	
+        
+        echo("<form action=\"a.php?tipo=6\" method=\"post\">");
+    	$sql = "SELECT numprocessosocorro FROM processosocorro ORDER BY numprocessosocorro ASC";
+        $result = $db->prepare($sql);
+        $result->execute();
+
+        /* COMBO BOX PARA ESCOLHER PROCESSO */
+        echo ("<p>Numero do processo de socorro a ser removido: ");
+        echo("<select type=\"text\" name=\"numprocessosocorro\">\n");
+        foreach($result as $row) {
+            echo("<option value='{$row['numprocessosocorro']}'>{$row['numprocessosocorro']}</option></p>");
+        }
+        echo("</select>\n");
+        echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
     }
+    
 
 
     elseif ($option == 7) {

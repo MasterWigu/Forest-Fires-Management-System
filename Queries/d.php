@@ -29,18 +29,6 @@
             $numtelefone = $_REQUEST['numtelefone'];
             $instantechamada = $_REQUEST['instantechamada'];
             $numprocessosocorro = $_REQUEST['numprocessosocorro'];
-            /*$numprocessosocorro1 = $_REQUEST['numprocessosocorro1'];
-            $numprocessosocorro2 = $_REQUEST['numprocessosocorro2'];
-            if ($numprocessosocorro2 == null) {
-                $numprocessosocorro = $numprocessosocorro1;
-            }
-            else {
-                $numprocessosocorro = $numprocessosocorro2;
-            }
-            echo($numprocessosocorro);
-            echo($numprocessosocorro1);
-            echo($numprocessosocorro2);
-            echo("teste1");*/
 
             $sql = "select * from processosocorro where numprocessosocorro = :numprocessosocorro";
 

@@ -36,7 +36,7 @@
             echo ("<p>What's the entity of the Vehicle:");
             echo("<select type=\"text\" name=\"nomeentidade\">\n");
             foreach($result as $row) {
-                echo("<option value={$row['nomeentidade']}>{$row['nomeentidade']}</option></p>");
+                echo("<option value='{$row['nomeentidade']}'>{$row['nomeentidade']}</option></p>");
             }
             echo("</select>\n");
             echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>");
@@ -52,12 +52,6 @@
             $result->execute();
 
             echo ("<p>What's the Number of Process:");
-            /*echo("<select type=\"text\" name=\"numprocessosocorro1\">\n");
-            foreach($result as $row) {
-                echo("<option value={$row['numprocessosocorro']}>{$row['numprocessosocorro']}</option></p>");
-            }
-
-            echo("</select><p> or fill in: ");*/
             echo("<input type=\"text\" name=\"numprocessosocorro\"/></p>\n");
             echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>");
         }
