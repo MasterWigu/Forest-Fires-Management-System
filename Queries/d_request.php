@@ -47,9 +47,6 @@
             echo("<p>What's the Telephone Number: <input type=\"text\" name=\"numtelefone\"/></p>");
             echo("<p>What's the time and date of the Event[yyyy-mm-dd hh:mm:ss]: <input type=\"text\" name=\"instantechamada\"/></p>");
              
-            $sql = "SELECT numprocessosocorro FROM processosocorro ORDER BY numprocessosocorro ASC";
-            $result = $db->prepare($sql);
-            $result->execute();
 
             echo ("<p>What's the Number of Process:");
             echo("<input type=\"text\" name=\"numprocessosocorro\"/></p>\n");

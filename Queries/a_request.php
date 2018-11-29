@@ -149,7 +149,7 @@
         echo ("<p>Entidade: ");
         echo("<select type=\"text\" name=\"nomeentidade\">\n");
         foreach($result as $row) {
-            echo("<option value={$row['nomeentidade']}>{$row['nomeentidade']}</option></p>");
+            echo("<option value='{$row['nomeentidade']}'>{$row['nomeentidade']}</option></p>");
         }
         echo("</select>\n");
 
@@ -159,8 +159,19 @@
 
     elseif ($option == 8) {
     	echo("<form action=\"a.php?tipo=8\" method=\"post\">");
+
         echo("<p>Numero do meio a remover: <input type=\"text\" name=\"nummeio\"/></p>");
-        echo("<p>Nome da entidade a que pertence o meio a remover: <input type=\"text\" name=\"nomeentidade\"/></p>"); /* NAO ESTA COM COMBO BOX PORQUE OS ESPACOS ESTAO A LIXAR TUDO */
+        $sql = "SELECT * FROM entidademeio";
+        $result = $db->prepare($sql);
+        $result->execute();
+
+        /* COMBO BOX PARA ESCOLHER ENTIDADE ONDE ADICIONAR MEIO */
+        echo ("<p>Entidade do meio a remover: ");
+        echo("<select type=\"text\" name=\"nomeentidade\">\n");
+        foreach($result as $row) {
+            echo("<option value='{$row['nomeentidade']}'>{$row['nomeentidade']}</option></p>");
+        }
+        echo("</select>\n");
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
     }
 
