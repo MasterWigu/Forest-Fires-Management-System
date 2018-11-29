@@ -3,10 +3,19 @@
 	<body>
 <?php
 
+	function parseentidademeio($entidademeio) {
+		$array = explode(',', $entidademeio);
+
+
+
+	}
+
+
+
+
 	$tipo = $_REQUEST['tipo'];
 
-	try
-	{
+	try {
 
 		$host = "db.ist.utl.pt";
 		$user ="ist187689";
@@ -16,34 +25,129 @@
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-		if ($tipo == 1) {
-			
+		if ($tipo == 1) { #adicionar combate
+			$entidademeio = $_REQUEST['entidademeio'];
+			$array = explode(',', $entidademeio);
+			$nomeentidade = $array[0];
+			$nummeio = $array[1];
+
+			$sql = "INSERT INTO meiocombate VALUES (:nummeio, :nomeentidade)";
+
+       		$result = $db->prepare($sql);
+
+        	$result->execute([':nummeio' => $nummeio, ':nomeentidade' => $nomeentidade]);
+
+        	echo("Meio numero {$nummeio} da entidade {$nomeentidade} adicionado com sucesso a lista de meios de combate.");
+
+		}
+
+
+		elseif ($tipo == 2) { #remover combate
+			$entidademeio = $_REQUEST['entidademeio'];
+			$array = explode(',', $entidademeio);
+			$nomeentidade = $array[0];
+			$nummeio = $array[1];
+
+			$sql = "DELETE FROM meiocombate WHERE nummeio = :nummeio AND nomeentidade = :nomeentidade";
+
+       		$result = $db->prepare($sql);
+
+        	$result->execute([':nummeio' => $nummeio, ':nomeentidade' => $nomeentidade]);
+
+        	echo("Meio numero {$nummeio} da entidade {$nomeentidade} removido com sucesso da lista de meios de combate.");
+
+		}
+
+
+		elseif ($tipo == 3) { #modificar combate
+			$entidademeio = $_REQUEST['entidademeio'];
+			$array = explode(',', $entidademeio);
+			$nomeentidade = $array[0];
+			$nummeio = $array[1];
 			
 		}
 
 
-		elseif ($tipo == 2) {
+		elseif ($tipo == 4) { #adicionar apoio
+			$entidademeio = $_REQUEST['entidademeio'];
+			$array = explode(',', $entidademeio);
+			$nomeentidade = $array[0];
+			$nummeio = $array[1];
 
+			$sql = "INSERT INTO meioapoio VALUES (:nummeio, :nomeentidade)";
 
+       		$result = $db->prepare($sql);
+
+        	$result->execute([':nummeio' => $nummeio, ':nomeentidade' => $nomeentidade]);
+
+        	echo("Meio numero {$nummeio} da entidade {$nomeentidade} adicionado com sucesso a lista de meios de apoio.");
 			
 		}
 
 
-		elseif ($tipo == 3) {
+		elseif ($tipo == 5) { #remover apoio
+			$entidademeio = $_REQUEST['entidademeio'];
+			$array = explode(',', $entidademeio);
+			$nomeentidade = $array[0];
+			$nummeio = $array[1];
+
+			$sql = "DELETE FROM meioapoio WHERE nummeio = :nummeio AND nomeentidade = :nomeentidade";
+
+       		$result = $db->prepare($sql);
+
+        	$result->execute([':nummeio' => $nummeio, ':nomeentidade' => $nomeentidade]);
+
+        	echo("Meio numero {$nummeio} da entidade {$nomeentidade} removido com sucesso da lista de meios de apoio.");
+			
+		}
+
+		elseif ($tipo == 6) { #modificar apoio
+			$entidademeio = $_REQUEST['entidademeio'];
+			$array = explode(',', $entidademeio);
+			$nomeentidade = $array[0];
+			$nummeio = $array[1];
 			
 		}
 
 
-		elseif ($tipo == 4) {
+		elseif ($tipo == 7) { #adicionar socorro
+			$entidademeio = $_REQUEST['entidademeio'];
+			$array = explode(',', $entidademeio);
+			$nomeentidade = $array[0];
+			$nummeio = $array[1];
+
+			$sql = "INSERT INTO meiosocorro VALUES (:nummeio, :nomeentidade)";
+
+       		$result = $db->prepare($sql);
+
+        	$result->execute([':nummeio' => $nummeio, ':nomeentidade' => $nomeentidade]);
+
+        	echo("Meio numero {$nummeio} da entidade {$nomeentidade} adicionado com sucesso a lista de meios de socorro.");
 			
 		}
 
 
-		elseif ($tipo == 5) {
+		elseif ($tipo == 8) { #remover socorro
+			$entidademeio = $_REQUEST['entidademeio'];
+			$array = explode(',', $entidademeio);
+			$nomeentidade = $array[0];
+			$nummeio = $array[1];
+
+			$sql = "DELETE FROM meiosocorro WHERE nummeio = :nummeio AND nomeentidade = :nomeentidade";
+
+       		$result = $db->prepare($sql);
+
+        	$result->execute([':nummeio' => $nummeio, ':nomeentidade' => $nomeentidade]);
+
+        	echo("Meio numero {$nummeio} da entidade {$nomeentidade} removido com sucesso da lista de meios de socorro.");
 			
 		}
 
-		else {
+		else { #modificar socorro
+			$entidademeio = $_REQUEST['entidademeio'];
+			$array = explode(',', $entidademeio);
+			$nomeentidade = $array[0];
+			$nummeio = $array[1];
 			
 		}
 

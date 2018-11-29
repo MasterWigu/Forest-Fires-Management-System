@@ -2,7 +2,7 @@
     <body>
 <?php
     $numprocessosocorro = $_REQUEST['numprocessosocorro'];
-    echo("<h3>Listagem dos meios associados ao processo de socorro </h3>");
+    
     try
     {
         $host = "db.ist.utl.pt";
@@ -17,6 +17,9 @@
         $result = $db->prepare($sql);
 
         $result->execute([':numprocessosocorro' => $numprocessosocorro]);
+
+
+        echo("<h3>Listagem dos meios associados ao processo de socorro numero {$numprocessosocorro}</h3>");
 
 		echo("<table border=\"1\">\n");
 		echo("<tr><td>Numero do Processo de Socorro</td><td>Nome da Entidade</td><td>Numero do Meio</td></tr>\n");

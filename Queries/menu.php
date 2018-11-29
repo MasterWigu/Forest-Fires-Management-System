@@ -39,7 +39,7 @@
 
             <tr>
             <td>Meio de Combate</td>
-			<td><a href=b_request2.php> Inserir </td>
+			<td><a href=b_request.php?option=1> Inserir </td>
 			<td><a href=b_request.php?option=2> Remover </td>
 			<td><a href=b_request.php?option=3> Editar </td>
 			</tr>

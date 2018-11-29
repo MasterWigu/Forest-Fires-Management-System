@@ -2,7 +2,7 @@
     <body>
 <?php
     $moradalocal = $_REQUEST['moradalocal'];
-    echo("<h3>Meios de socorro accionados em processos de socorro originados em </h3>");
+    
     try
     {
         $host = "db.ist.utl.pt";
@@ -17,6 +17,8 @@
         $result = $db->prepare($sql);
 
         $result->execute([':moradalocal' => $moradalocal]);
+
+        echo("<h3>Meios de socorro accionados em processos de socorro originados em {$moradalocal}</h3>");
 
 		echo("<table border=\"1\">\n");
 		echo("<tr><td>Numero do Processo de Socorro</td><td>Nome da Entidade</td><td>Numero do Meio</td></tr>\n");
