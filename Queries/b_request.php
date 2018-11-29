@@ -53,6 +53,20 @@
 
     elseif ($option == 3) {
         echo("<form action=\"b.php?tipo=3\" method=\"post\">");
+
+        $sql = "SELECT nummeio, nomeentidade FROM meiocombate";
+        $result = $db->prepare($sql);
+        $result->execute();
+
+        echo ("<p>Meio de combate a editar: ");
+        echo("<select type=\"text\" name=\"entidademeio\">\n");
+        foreach($result as $row) {
+            $temp = " Meio ". $row['nummeio'];
+            echo("<option value='{$row['nomeentidade']},{$row['nummeio']}'>'{$row['nomeentidade']},{$temp}'</option></p>");
+        }
+        echo("</select>\n");
+
+        echo("<p>Novo nome para o meio: <input type=\"text\" name=\"nomemeio\"/></p>");
       
 
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
@@ -101,6 +115,19 @@
     elseif ($option == 6) {
         echo("<form action=\"b.php?tipo=6\" method=\"post\">");
 
+        $sql = "SELECT nummeio, nomeentidade FROM meioapoio";
+        $result = $db->prepare($sql);
+        $result->execute();
+
+        echo ("<p>Meio de apoio a editar: ");
+        echo("<select type=\"text\" name=\"entidademeio\">\n");
+        foreach($result as $row) {
+            $temp = " Meio ". $row['nummeio'];
+            echo("<option value='{$row['nomeentidade']},{$row['nummeio']}'>'{$row['nomeentidade']},{$temp}'</option></p>");
+        }
+        echo("</select>\n");
+
+        echo("<p>Novo nome para o meio: <input type=\"text\" name=\"nomemeio\"/></p>");
 
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
 
@@ -149,6 +176,19 @@
     else {
         echo("<form action=\"b.php?tipo=6\" method=\"post\">");
        
+        $sql = "SELECT nummeio, nomeentidade FROM meiosocorro";
+        $result = $db->prepare($sql);
+        $result->execute();
+
+        echo ("<p>Meio de socorro a editar: ");
+        echo("<select type=\"text\" name=\"entidademeio\">\n");
+        foreach($result as $row) {
+            $temp = " Meio ". $row['nummeio'];
+            echo("<option value='{$row['nomeentidade']},{$row['nummeio']}'>'{$row['nomeentidade']},{$temp}'</option></p>");
+        }
+        echo("</select>\n");
+
+        echo("<p>Novo nome para o meio: <input type=\"text\" name=\"nomemeio\"/></p>");
 
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>");
     }

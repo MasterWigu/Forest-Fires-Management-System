@@ -64,6 +64,16 @@
 			$array = explode(',', $entidademeio);
 			$nomeentidade = $array[0];
 			$nummeio = $array[1];
+			$nomemeio = $_REQUEST['nomemeio'];
+
+
+			$sql = "UPDATE meio SET nomemeio = :nomemeio WHERE nummeio = :nummeio AND nomeentidade = :nomeentidade";
+
+       		$result = $db->prepare($sql);
+
+        	$result->execute([':nomemeio' => $nomemeio, ':nummeio' => $nummeio, ':nomeentidade' => $nomeentidade]);
+
+        	echo("Meio numero {$nummeio} da entidade {$nomeentidade} editado com sucesso.");
 			
 		}
 
@@ -106,6 +116,16 @@
 			$array = explode(',', $entidademeio);
 			$nomeentidade = $array[0];
 			$nummeio = $array[1];
+			$nomemeio = $_REQUEST['nomemeio'];
+
+
+			$sql = "UPDATE meio SET nomemeio = :nomemeio WHERE nummeio = :nummeio AND nomeentidade = :nomeentidade";
+
+       		$result = $db->prepare($sql);
+
+        	$result->execute([':nomemeio' => $nomemeio, ':nummeio' => $nummeio, ':nomeentidade' => $nomeentidade]);
+
+        	echo("Meio numero {$nummeio} da entidade {$nomeentidade} editado com sucesso.");
 			
 		}
 
@@ -148,6 +168,16 @@
 			$array = explode(',', $entidademeio);
 			$nomeentidade = $array[0];
 			$nummeio = $array[1];
+			$nomemeio = $_REQUEST['nomemeio'];
+
+
+			$sql = "UPDATE meio SET nomemeio = :nomemeio WHERE nummeio = :nummeio AND nomeentidade = :nomeentidade";
+
+       		$result = $db->prepare($sql);
+
+        	$result->execute([':nomemeio' => $nomemeio, ':nummeio' => $nummeio, ':nomeentidade' => $nomeentidade]);
+
+        	echo("Meio numero {$nummeio} da entidade {$nomeentidade} editado com sucesso.");
 			
 		}
 
