@@ -17,7 +17,7 @@
             $nummeio = $_REQUEST['nummeio'];
             $nomeentidade = $_REQUEST['nomeentidade'];
 
-            $sql = "insert into acciona values (:nummeio, :nomeentidade, :numprocessosocorro)";
+            $sql = "INSERT INTO acciona VALUES (:nummeio, :nomeentidade, :numprocessosocorro)";
 
             $result = $db->prepare($sql);
             $result->execute([':nummeio' => $nummeio, ':nomeentidade' => $nomeentidade, ':numprocessosocorro' => $numprocessosocorro]);
@@ -26,29 +26,31 @@
         
         }
         else {
-            $numtelefone = $_REQUEST['numtelefone'];
-            $instantechamada = $_REQUEST['instantechamada'];
             $numprocessosocorro = $_REQUEST['numprocessosocorro'];
+            $telefoneinstante = $_REQUEST['telefoneinstante'];
 
-            $sql = "select * from processosocorro where numprocessosocorro = :numprocessosocorro";
+            $array_tel_inst = explode(',', $telefoneinstante);
+            $numtelefone = $array_tel_inst[0];
+            $instantechamada = $array_tel_inst[1];
+
+            $sql = "SELECT * FROM processosocorro WHERE numprocessosocorro = :numprocessosocorro";
 
             $result = $db->prepare($sql);
             $result->execute([':numprocessosocorro' => $numprocessosocorro]);
 
             if ($result->rowCount() == 0) {
-                echo("teste3");
-                $sql = "insert into processosocorro values (:numprocessosocorro)";
+                $sql = "INSERT INTO processosocorro VALUES (:numprocessosocorro)";
                 $result = $db->prepare($sql);
                 $result->execute([':numprocessosocorro' => $numprocessosocorro]);
             }
 
-            $sql = "select numprocessosocorro from eventoemergencia where numtelefone = :numtelefone and instantechamada = :instantechamada";
+            $sql = "SELECT numprocessosocorro FROM eventoemergencia WHERE numtelefone = :numtelefone AND instantechamada = :instantechamada";
 
             $result = $db->prepare($sql);
             $result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
 
             if ($result->fetch()['numprocessosocorro'] == null) {
-                $sql = "update eventoemergencia set numprocessosocorro = :numprocessosocorro where numtelefone = :numtelefone and instantechamada = :instantechamada";
+                $sql = "UPDATE eventoemergencia SET numprocessosocorro = :numprocessosocorro WHERE numtelefone = :numtelefone AND instantechamada = :instantechamada";
 
                 $result = $db->prepare($sql);
                 $result->execute([':numprocessosocorro' => $numprocessosocorro, ':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);

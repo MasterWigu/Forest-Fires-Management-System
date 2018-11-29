@@ -17,6 +17,7 @@
 
 
     if ($option == 1) {
+        echo("<h3>Inserir novo local</h3>");
         echo("<form action=\"a.php?tipo=1\" method=\"post\">");
     	echo("<p>Nova morada: <input type=\"text\" name=\"moradalocal\"/></p>");
     	echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
@@ -24,6 +25,7 @@
 
 
     elseif ($option == 2) {
+        echo("<h3>Remover local</h3>");
         echo("<form action=\"a.php?tipo=2\" method=\"post\">");
         echo("<p>Morada a remover: <input type=\"text\" name=\"moradalocal\"/></p>");
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
@@ -31,8 +33,8 @@
 
 
     elseif ($option == 3) {
+        echo("<h3>Inserir novo evento de emergencia</h3>");
     	echo("<form action=\"a.php?tipo=3\" method=\"post\">");
-
         echo("<p>Numero de telefone: <input type=\"text\" name=\"numtelefone\"/></p>");
         echo("<p>Data e hora a que a chamada foi efetuada: <input type=\"text\" name=\"instantechamada\"/></p>");
         echo("<p>Nome da pessoa que telefonou: <input type=\"text\" name=\"nomepessoa\"/></p>");
@@ -57,6 +59,7 @@
         /* COMBO BOX PARA ESCOLHER PROCESSO */
         echo ("<p>Numero do processo de socorro originado (opcional): ");
         echo("<select type=\"text\" name=\"numprocessosocorro\">\n");
+        echo("<option value='{$row['null']}'>{$row['null']}</option></p>");
         foreach($result as $row) {
             echo("<option value='{$row['numprocessosocorro']}'>{$row['numprocessosocorro']}</option></p>");
         }
@@ -67,6 +70,7 @@
 
 
     elseif ($option == 4) {
+        echo("<h3>Remover evento de emergencia</h3>");
         echo("<form action=\"a.php?tipo=4\" method=\"post\">");
 
         echo("<p>Numero de telefone: <input type=\"text\" name=\"numtelefone\"/></p>");
@@ -77,47 +81,29 @@
 
 
     elseif ($option == 5) { /* mostrar todos os eventos de emergencia cujo numprocessosocorro = null */
+        echo("<h3>Inserir novo processo de socorro</h3>");
         echo("<form action=\"a.php?tipo=5\" method=\"post\">");
 
         echo("<p>Numero do processo de socorro originado: <input type=\"text\" name=\"numprocessosocorro\"/></p>");
-
-
-        /* COMBO BOX PARA ESCOLHER PROCESSO */
-        /*BOA SORTE COM ISSO*/
         
+        $sql = "SELECT numtelefone, instantechamada FROM eventoemergencia WHERE numprocessosocorro IS NULL ORDER BY instantechamada ASC ";
+        $result = $db->prepare($sql);
+        $result->execute();
+
+        /* COMBO BOX PARA NUMTELEFONE E INSTANTECHAMADA DOS EVENTOS CUJO NUMPROCESSO = NULL */
         echo ("<p>Evento de emergencia que originou o processo de socorro: "); /* DEPOIS VAI TER QUE SER PARA MAIS QUE UM EVENTO DE EMERGENCIA */
-        $sql = "SELECT numtelefone FROM eventoemergencia ORDER BY numtelefone ASC";
-        $result = $db->prepare($sql);
-        $result->execute();
-
-        /* COMBO BOX PARA ESCOLHER PROCESSO */
-        echo ("<p>Numero de telefone do evento: ");
-        echo("<select type=\"text\" name=\"numtelefone\">\n");
+        echo("<select type=\"text\" name=\"telefoneinstante\">\n");
         foreach($result as $row) {
-            echo("<option value='{$row['numtelefone']}'>{$row['numtelefone']}</option></p>");
+            echo("<option value='{$row['numtelefone']}, {$row['instantechamada']}'>{$row['numtelefone']}, {$row['instantechamada']}</option></p>");
         }
         echo("</select>\n");
-
-        $sql = "SELECT instantechamada FROM eventoemergencia ORDER BY instantechamada ASC";
-        $result = $db->prepare($sql);
-        $result->execute();
-
-        /* COMBO BOX PARA ESCOLHER PROCESSO */
-        echo ("<p>Data e hora do envento de emergencia: ");
-        echo("<select type=\"text\" name=\"instantechamada\">\n");
-        foreach($result as $row) {
-            echo("<option value='{$row['instantechamada']}'>{$row['instantechamada']}</option></p>");
-        }
-        echo("</select>\n");
-        /*echo("<p>Numero de telefone: <input type=\"text\" name=\"numtelefone\"/></p>");
-        echo("<p>Data e hora a que a chamada foi efetuada: <input type=\"text\" name=\"instantechamada\"/></p>");**/
-
 
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
     }
 
 
     elseif ($option == 6) {
+        echo("<h3>Remover processo de socorro</h3>");
         
         echo("<form action=\"a.php?tipo=6\" method=\"post\">");
     	$sql = "SELECT numprocessosocorro FROM processosocorro ORDER BY numprocessosocorro ASC";
@@ -137,6 +123,7 @@
 
 
     elseif ($option == 7) {
+        echo("<h3>Inserir novo meio</h3>");
         echo("<form action=\"a.php?tipo=7\" method=\"post\">");
 
         echo("<p>Nome do meio a adicionar: <input type=\"text\" name=\"nomemeio\"/></p>");
@@ -158,6 +145,7 @@
 
 
     elseif ($option == 8) {
+        echo("<h3>Remover meio</h3>");
     	echo("<form action=\"a.php?tipo=8\" method=\"post\">");
 
         echo("<p>Numero do meio a remover: <input type=\"text\" name=\"nummeio\"/></p>");
@@ -177,6 +165,7 @@
 
 
     elseif ($option == 9) {
+        echo("<h3>Inserir nova entidade</h3>");
     	echo("<form action=\"a.php?tipo=9\" method=\"post\">");
         echo("<p>Nome da nova entidade: <input type=\"text\" name=\"nomeentidade\"/></p>");
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>");
@@ -184,6 +173,7 @@
 
 
     else {
+        echo("<h3>Remover entidade</h3>");
         echo("<form action=\"a.php?tipo=10\" method=\"post\">");
         echo("<p>Nome da entidade a remover: <input type=\"text\" name=\"nomeentidade\"/></p>");
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>");

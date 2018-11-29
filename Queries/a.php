@@ -116,15 +116,18 @@
 
 		elseif ($tipo == 5) {
 			$numprocessosocorro = $_REQUEST['numprocessosocorro'];
-			$numtelefone = $_REQUEST['numtelefone'];
-			$instantechamada = $_REQUEST['instantechamada'];
+			$telefoneinstante = $_REQUEST['telefoneinstante'];
 
-			$sql = "select numprocessosocorro from eventoemergencia where numtelefone = :numtelefone and instantechamada = :instantechamada";
+			$array_tel_inst = explode(',', $telefoneinstante);
+			$numtelefone = $array_tel_inst[0];
+			$instantechamada = $array_tel_inst[1];
+
+			$sql = "SELECT numprocessosocorro FROM eventoemergencia WHERE numtelefone = :numtelefone AND instantechamada = :instantechamada";
 
             $result = $db->prepare($sql);
             $result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
 
-            if ($result->fetch()['numprocessosocorro'] == null) {
+            if ($result->fetch()['numprocessosocorro'] == null) { // se estiver a null nao ha nenhum processo de socorro
 
 				$sql = "INSERT INTO processosocorro VALUES (:numprocessosocorro)";
 				$result = $db->prepare($sql);

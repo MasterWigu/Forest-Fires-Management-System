@@ -1,5 +1,6 @@
 <html>
 	<body>
+		<h3>Sistema de Gestao de Incendios Florestais</h3>
         <table cellspacing="10">
             <tr>
             <td>Local</td>
