@@ -20,7 +20,7 @@ from
 select distinct nomeEntidade, numProcessoSocorro
 from acciona natural join eventoEmergencia
 where instanteChamada >= '2018-06-21 00:00:00'
-  and instanteChamada <= '2018-09-21 23:59:59'
+  and instanteChamada <= '2018-09-22 23:59:59'
 ) as R1
 group by nomeEntidade
 having count(nomeEntidade) >= all (
@@ -30,7 +30,7 @@ having count(nomeEntidade) >= all (
         select distinct nomeEntidade, numProcessoSocorro
         from acciona natural join eventoEmergencia
         where instanteChamada >= '2018-06-21 00:00:00'
-            and instanteChamada <= '2018-09-21 23:59:59'
+            and instanteChamada <= '2018-09-22 23:59:59'
     ) as R2
     group by nomeEntidade
 );
@@ -39,38 +39,21 @@ having count(nomeEntidade) >= all (
 /* 3. Processos de socorro, referentes a eventos de emergencia em 2018 de
 Oliveira do Hospital, onde existe pelo menos um acionamento de meios que
 nao foi alvo de auditoria */
-select numProcessoSocorro
-from *R1* as R1 natural join *R2* as R2
-where countEvento > countAudita
-
-*R1*
-select numProcessoSocorro, count(numProcessoSocorro) as countEvento
-from eventoEmergencia natural join acciona
-where ...
-group by numProcessoSocorro
-
-*R2*
-select numProcessoSocorro, count(numProcessoSocorro) as countAudita
-from audita
-group by numProcessoSocorro
-
-/* 3 completo */
-select numProcessoSocorro
+/* Testada */
+select distinct R1.numProcessoSocorro
 from
 (
-    select numProcessoSocorro, count(numProcessoSocorro) as countEvento
+    select numProcessoSocorro, numMeio, nomeEntidade
     from eventoEmergencia natural join acciona
     where moradaLocal = 'Oliveira do Hospital'
         and instanteChamada >= '2018-01-01 00:00:00'
         and instanteChamada <= '2018-12-31 23:59:59'
-    group by numProcessoSocorro
-) as R1 natural join 
+) as R1 left join 
 (
-    select numProcessoSocorro, count(numProcessoSocorro) as countAudita
-    from audita
-    group by numProcessoSocorro
-) as R2
-where countEvento > countAudita;
+    select numProcessoSocorro, numMeio, nomeEntidade
+    from audita 
+) as R2 on R1.numProcessoSocorro = R2.numProcessoSocorro and R1.numMeio = R2.numMeio and R1.nomeEntidade = R2.nomeEntidade
+where R2.numProcessoSocorro is null and R2.numMeio is null and R2.nomeEntidade is null; 
 
 
 /* 4. Numero de segmentos de video com duração superior a 60 segundos, que
@@ -164,9 +147,19 @@ having count(distinct numProcessoSocorro) = (
 );
 
 
-    select *
+/* 3 */
+/* 3 completo */
+select distinct R1.numProcessoSocorro
+from
+(
+    select numProcessoSocorro, numMeio, nomeEntidade
     from eventoEmergencia natural join acciona
     where moradaLocal = 'Oliveira do Hospital'
         and instanteChamada >= '2018-01-01 00:00:00'
         and instanteChamada <= '2018-12-31 23:59:59'
-    group by numProcessoSocorro
+) as R1 left join 
+(
+    select numProcessoSocorro, numMeio, nomeEntidade
+    from audita 
+) as R2 on R1.numProcessoSocorro = R2.numProcessoSocorro and R1.numMeio = R2.numMeio and R1.nomeEntidade = R2.nomeEntidade
+where R2.numProcessoSocorro is null and R2.numMeio is null and R2.nomeEntidade is null; 
