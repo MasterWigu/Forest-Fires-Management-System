@@ -102,12 +102,17 @@
 
 		elseif ($tipo == 3) {
 			$numtelefone = $_REQUEST['numtelefone'];
-			$instantechamada = $_REQUEST['instantechamada'];
+			$instantechamada = date("Y-m-d H:i:s",strtotime($_REQUEST['instantechamada']));
 			$nomepessoa = $_REQUEST['nomepessoa'];
-			$moradaLocal = $_REQUEST['moradalocal'];
+			$moradalocal = $_REQUEST['moradalocal'];
 			$numprocessosocorro = $_REQUEST['numprocessosocorro'];
 
-			$sql "SELECT * FROM eventoemergencia WHERE numtelefone = :numtelefone, instantechamada = :instantechamada";
+			if ($numprocessosocorro == -1)
+				$numprocessosocorro = null;
+
+			$sql = "SELECT * FROM eventoemergencia WHERE numtelefone = :numtelefone AND instantechamada = :instantechamada";
+			$result = $db->prepare($sql);
+			$result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
 
 			if ($result->rowCount() == 0) {
 				$sql = "INSERT INTO eventoemergencia VALUES (:numtelefone, :instantechamada, :nomepessoa, :moradalocal, :numprocessosocorro)";
@@ -118,7 +123,7 @@
 				echo("Evento de emergencia adicionado");
 			}
 			else {
-				echo("O evento de emergencia ja existe")
+				echo("O evento de emergencia ja existe");
 			}
 		}
 
@@ -221,8 +226,12 @@
 
 
 		elseif ($tipo == 8) {
-			$nummeio = $_REQUEST['nummeio'];
-			$nomeentidade = $_REQUEST['nomeentidade'];
+			$entidademeio = $_REQUEST['entidademeio'];
+
+			$array_ent_meio = explode(',', $entidademeio);
+			$nomeentidade = $array_ent_meio[0];
+			$nummeio = $array_ent_meio[1];
+
 
 
 			$sql = "DELETE FROM meio WHERE nomeentidade = :nomeentidade AND nummeio = :nummeio";

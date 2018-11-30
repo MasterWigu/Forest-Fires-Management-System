@@ -65,7 +65,7 @@
             /* COMBO BOX PARA ESCOLHER PROCESSO */
             echo ("<p>Numero do processo de socorro originado (opcional): ");
             echo("<select type=\"text\" name=\"numprocessosocorro\">\n");
-            echo("<option value='{$row['null']}'>{$row['null']}</option></p>");
+            echo("<option value='-1'>{$row['null']}</option></p>");
             foreach($result as $row) {
                 echo("<option value='{$row['numprocessosocorro']}'>{$row['numprocessosocorro']}</option></p>");
             }
@@ -163,16 +163,15 @@
             echo("<h3>Remover meio</h3>");
         	echo("<form action=\"../Queries/a.php?tipo=8\" method=\"post\">");
 
-            echo("<p>Numero do meio a remover: <input type=\"text\" name=\"nummeio\"/></p>");
-            $sql = "SELECT * FROM entidademeio";
+             $sql = "SELECT nummeio, nomeentidade FROM meio";
             $result = $db->prepare($sql);
             $result->execute();
 
-            /* COMBO BOX PARA ESCOLHER ENTIDADE ONDE ADICIONAR MEIO */
-            echo ("<p>Entidade do meio a remover: ");
-            echo("<select type=\"text\" name=\"nomeentidade\">\n");
+            echo ("<p>Numero e Entidade do meio a remover: ");
+            echo("<select type=\"text\" name=\"entidademeio\">\n");
             foreach($result as $row) {
-                echo("<option value='{$row['nomeentidade']}'>{$row['nomeentidade']}</option></p>");
+                $temp = " Meio ". $row['nummeio'];
+                echo("<option value='{$row['nomeentidade']},{$row['nummeio']}'>'{$row['nomeentidade']},{$temp}'</option></p>");
             }
             echo("</select>\n");
             echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
