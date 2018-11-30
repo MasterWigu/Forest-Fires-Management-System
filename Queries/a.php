@@ -58,14 +58,23 @@
 		if ($tipo == 1) {
 			$moradalocal = $_REQUEST['moradalocal'];
 
-		
-			$sql = "INSERT INTO localidade VALUES (:moradalocal)";
+			$sql = "SELECT * FROM localidade WHERE moradalocal = :moradalocal";
 
 			$result = $db->prepare($sql);
 			$result->execute([':moradalocal' => $moradalocal]);
 
+			if ($result->rowCount() == 0) {
+				$sql = "INSERT INTO localidade VALUES (:moradalocal)";
 
-			echo("{$moradalocal} foi adicionada a lista de localidades.");
+				$result = $db->prepare($sql);
+				$result->execute([':moradalocal' => $moradalocal]);
+
+
+				echo("{$moradalocal} foi adicionada a lista de localidades.");
+			}
+			else {
+				echo("{$moradalocal} ja existe na lista de localidades.");
+			}
 		}
 
 
@@ -98,14 +107,19 @@
 			$moradaLocal = $_REQUEST['moradalocal'];
 			$numprocessosocorro = $_REQUEST['numprocessosocorro'];
 
+			$sql "SELECT * FROM eventoemergencia WHERE numtelefone = :numtelefone, instantechamada = :instantechamada";
 
-			$sql = "INSERT INTO eventoemergencia VALUES (:numtelefone, :instantechamada, :nomepessoa, :moradalocal, :numprocessosocorro)";
+			if ($result->rowCount() == 0) {
+				$sql = "INSERT INTO eventoemergencia VALUES (:numtelefone, :instantechamada, :nomepessoa, :moradalocal, :numprocessosocorro)";
 
-			$result = $db->prepare($sql);
-			$result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada, ':nomepessoa' => $nomepessoa,':moradalocal' => $moradalocal, ':numprocessosocorro' => $numprocessosocorro]);
+				$result = $db->prepare($sql);
+				$result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada, ':nomepessoa' => $nomepessoa,':moradalocal' => $moradalocal, ':numprocessosocorro' => $numprocessosocorro]);
 
-
-			echo("Evento de emergencia adicionado");
+				echo("Evento de emergencia adicionado");
+			}
+			else {
+				echo("O evento de emergencia ja existe")
+			}
 		}
 
 
@@ -190,7 +204,9 @@
 			$result->execute([':nomeentidade' => $nomeentidade]);
 
 			if ($nummeio == null)
-				$nummeio = 0;
+				$nummeio = -1;#-1 porque depois ele cria o meio com nummeio +1 
+
+
 
 			$sql = "INSERT INTO meio VALUES (:nummeio, :nomemeio, :nomeentidade)";
 
@@ -221,13 +237,21 @@
 			$nomeentidade = $_REQUEST['nomeentidade'];
 
 
-			$sql = "INSERT INTO entidademeio VALUES (:nomeentidade)";
-
+			$sql = "SELECT * FROM entidademeio WHERE nomeentidade = :nomeentidade";
 			$result = $db->prepare($sql);
 			$result->execute([':nomeentidade' => $nomeentidade]);
 
+			if ($result->rowCount() == 0) {
+				$sql = "INSERT INTO entidademeio VALUES (:nomeentidade)";
 
-			echo("Entidade adicionada");
+				$result = $db->prepare($sql);
+				$result->execute([':nomeentidade' => $nomeentidade]);
+
+				echo("Entidade adicionada");
+			}
+			else {
+				echo("A entidade {$nomeentidade} ja existe");
+			}
 		}
 
 

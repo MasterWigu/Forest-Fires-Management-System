@@ -32,8 +32,6 @@
     }
 
 
-/*           echo("<option value='{$row['nomeentidade']},{$row['nummeio']}'>'{$row['nomeentidade']},{$row['nummeio']}'</option></p>");*/
-
     elseif ($option == 2) {
         echo("<form action=\"b.php?tipo=2\" method=\"post\">");
       

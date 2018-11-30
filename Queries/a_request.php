@@ -11,11 +11,6 @@
 
 	$option = $_REQUEST['option'];
 
-        /*if(isset($_POST)){
-            var_dump($_POST);
-        }*/
-
-
     if ($option == 1) {
         echo("<h3>Inserir novo local</h3>");
         echo("<form action=\"a.php?tipo=1\" method=\"post\">");
