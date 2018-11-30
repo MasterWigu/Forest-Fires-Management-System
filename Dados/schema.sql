@@ -79,7 +79,7 @@ create table eventoEmergencia(
     numProcessoSocorro int, ---- diz no enunciado que pode ser null
     constraint pk_eventoEmergencia primary key(numTelefone, instanteChamada),
     constraint fk_eventoEmergencia_localidade foreign key(moradaLocal) references localidade(moradaLocal) on delete cascade,
-    constraint fk_eventoEmergencia_processoSocorro foreign key(numProcessoSocorro) references processoSocorro(numProcessoSocorro),
+    constraint fk_eventoEmergencia_processoSocorro foreign key(numProcessoSocorro) references processoSocorro(numProcessoSocorro) on delete cascade,
     UNIQUE(numTelefone, nomePessoa)
 );
 
@@ -123,7 +123,7 @@ create table transporta(
     constraint fk_eventoEmergencia_processoSocorro foreign key(numProcessoSocorro) references processoSocorro(numProcessoSocorro) on delete cascade
 );
 
-create table alocado(
+create table alocado( 
     numMeio int not null,
     nomeEntidade varchar(80) not null,
     numHoras int not null,

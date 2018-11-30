@@ -13,7 +13,7 @@
 
     if ($option == 1) {
         echo("<h3>Inserir novo local</h3>");
-        echo("<form action=\"a.php?tipo=1\" method=\"post\">");
+        echo("<form action=\"../Queries/a.php?tipo=1\" method=\"post\">");
     	echo("<p>Nova morada: <input type=\"text\" name=\"moradalocal\"/></p>");
     	echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
     }
@@ -21,7 +21,7 @@
 
     elseif ($option == 2) {
         echo("<h3>Remover local</h3>");
-        echo("<form action=\"a.php?tipo=2\" method=\"post\">");
+        echo("<form action=\"../Queries/a.php?tipo=2\" method=\"post\">");
 
         $sql = "SELECT moradalocal FROM localidade ORDER BY localidade ASC";
         $result = $db->prepare($sql);
@@ -40,9 +40,9 @@
 
     elseif ($option == 3) {
         echo("<h3>Inserir novo evento de emergencia</h3>");
-    	echo("<form action=\"a.php?tipo=3\" method=\"post\">");
-        echo("<p>Numero de telefone: <input type=\"text\" name=\"numtelefone\"/></p>");
-        echo("<p>Data e hora a que a chamada foi efetuada: <input type=\"text\" name=\"instantechamada\"/></p>");
+    	echo("<form action=\"../Queries/a.php?tipo=3\" method=\"post\">");
+        echo("<p>Numero de telefone: <input type=\"number\" name=\"numtelefone\"/></p>");
+        echo("<p>Data e hora a que a chamada foi efetuada: <input type=\"datetime-local\" name=\"instantechamada\"/></p>");
         echo("<p>Nome da pessoa que telefonou: <input type=\"text\" name=\"nomepessoa\"/></p>");
         
         $sql = "SELECT moradalocal FROM localidade ORDER BY localidade ASC";
@@ -77,10 +77,10 @@
 
     elseif ($option == 4) {
         echo("<h3>Remover evento de emergencia</h3>");
-        echo("<form action=\"a.php?tipo=4\" method=\"post\">");
+        echo("<form action=\"../Queries/a.php?tipo=4\" method=\"post\">");
 
-        echo("<p>Numero de telefone: <input type=\"text\" name=\"numtelefone\"/></p>");
-        echo("<p>Data e hora a que a chamada foi efetuada: <input type=\"text\" name=\"instantechamada\"/></p>");
+        echo("<p>Numero de telefone: <input type=\"number\" name=\"numtelefone\"/></p>");
+        echo("<p>Data e hora a que a chamada foi efetuada: <input type=\"datetime-local\" name=\"instantechamada\"/></p>");
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
 
     }
@@ -88,9 +88,9 @@
 
     elseif ($option == 5) { /* mostrar todos os eventos de emergencia cujo numprocessosocorro = null */
         echo("<h3>Inserir novo processo de socorro</h3>");
-        echo("<form action=\"a.php?tipo=5\" method=\"post\">");
+        echo("<form action=\"../Queries/a.php?tipo=5\" method=\"post\">");
 
-        echo("<p>Numero do processo de socorro originado: <input type=\"text\" name=\"numprocessosocorro\"/></p>");
+        echo("<p>Numero do processo de socorro originado: <input type=\"number\" name=\"numprocessosocorro\"/></p>");
         
         $sql = "SELECT numtelefone, instantechamada FROM eventoemergencia WHERE numprocessosocorro IS NULL ORDER BY instantechamada ASC ";
         $result = $db->prepare($sql);
@@ -111,7 +111,7 @@
     elseif ($option == 6) {
         echo("<h3>Remover processo de socorro</h3>");
         
-        echo("<form action=\"a.php?tipo=6\" method=\"post\">");
+        echo("<form action=\"../Queries/a.php?tipo=6\" method=\"post\">");
     	$sql = "SELECT numprocessosocorro FROM processosocorro ORDER BY numprocessosocorro ASC";
         $result = $db->prepare($sql);
         $result->execute();
@@ -130,7 +130,7 @@
 
     elseif ($option == 7) {
         echo("<h3>Inserir novo meio</h3>");
-        echo("<form action=\"a.php?tipo=7\" method=\"post\">");
+        echo("<form action=\"../Queries/a.php?tipo=7\" method=\"post\">");
 
         echo("<p>Nome do meio a adicionar: <input type=\"text\" name=\"nomemeio\"/></p>");
 
@@ -152,7 +152,7 @@
 
     elseif ($option == 8) {
         echo("<h3>Remover meio</h3>");
-    	echo("<form action=\"a.php?tipo=8\" method=\"post\">");
+    	echo("<form action=\"../Queries/a.php?tipo=8\" method=\"post\">");
 
         echo("<p>Numero do meio a remover: <input type=\"text\" name=\"nummeio\"/></p>");
         $sql = "SELECT * FROM entidademeio";
@@ -172,7 +172,7 @@
 
     elseif ($option == 9) {
         echo("<h3>Inserir nova entidade</h3>");
-    	echo("<form action=\"a.php?tipo=9\" method=\"post\">");
+    	echo("<form action=\"../Queries/a.php?tipo=9\" method=\"post\">");
         echo("<p>Nome da nova entidade: <input type=\"text\" name=\"nomeentidade\"/></p>");
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>");
     }
@@ -180,8 +180,17 @@
 
     else {
         echo("<h3>Remover entidade</h3>");
-        echo("<form action=\"a.php?tipo=10\" method=\"post\">");
-        echo("<p>Nome da entidade a remover: <input type=\"text\" name=\"nomeentidade\"/></p>");
+        echo("<form action=\"../Queries/a.php?tipo=10\" method=\"post\">");
+        $sql = "SELECT nomeentidade FROM entidadeMeio ORDER BY nomeentidade ASC";
+        $result = $db->prepare($sql);
+        $result->execute();
+
+        echo ("<p>Nome da entidade a remover: ");
+        echo("<select type=\"text\" name=\"nomeentidade\">\n");
+        foreach($result as $row) {
+            echo("<option value='{$row['nomeentidade']}'>{$row['nomeentidade']}</option></p>");
+        }
+        echo("</select>\n");
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>");
     }
 
@@ -189,6 +198,6 @@
 ?>
     
     <br>
-    <button onclick="location.href = 'menu.php';">Voltar</button>
+    <button onclick="location.href = '../menu.php';">Voltar</button>
     </body>
 </html>

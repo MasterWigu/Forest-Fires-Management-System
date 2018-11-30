@@ -143,6 +143,6 @@
     }
 ?>
     <br><br>
-    <button onclick="location.href = 'menu.php';">Voltar</button>
+    <button onclick="location.href = '../menu.php';">Voltar</button>
     </body>
 </html>

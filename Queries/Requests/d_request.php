@@ -19,7 +19,7 @@
             $result->execute();
 
             echo("<h3>Associar processo de socorro a um meio</h3>");
-            echo("<form action=\"d.php?tipo=1\" method=\"post\">");
+            echo("<form action=\"../Queries/d.php?tipo=1\" method=\"post\">");
             echo ("<p>Numero do processo de socorro: ");
             echo("<select type=\"text\" name=\"numprocessosocorro\">\n");
             foreach($result as $row) {
@@ -51,7 +51,7 @@
 
         else {
             echo("<h3>Associar processo de socorro a eventos de emergencia</h3>");
-            echo("<form action=\"d.php?tipo=2\" method=\"post\">");
+            echo("<form action=\"../Queries/d.php?tipo=2\" method=\"post\">");
 
             $sql = "SELECT numprocessosocorro FROM processosocorro ORDER BY numprocessosocorro ASC";
             $result = $db->prepare($sql);
@@ -84,6 +84,6 @@
     }
 ?>
     <br>
-    <button onclick="location.href = 'menu.php';">Voltar</button>
+    <button onclick="location.href = '../menu.php';">Voltar</button>
     </body>
 </html>
