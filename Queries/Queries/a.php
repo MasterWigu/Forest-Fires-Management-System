@@ -124,8 +124,10 @@
 
 
 		elseif ($tipo == 4) {
-			$numtelefone = $_REQUEST['numtelefone'];
-			$instantechamada = $_REQUEST['instantechamada'];
+			$telefoneinstante = $_REQUEST['telefoneinstante'];
+			$array_tel_inst = explode(',', $telefoneinstante);
+			$numtelefone = $array_tel_inst[0];
+			$instantechamada = $array_tel_inst[1];
 
 			deleteevento($numtelefone, $instantechamada, $db);
 
