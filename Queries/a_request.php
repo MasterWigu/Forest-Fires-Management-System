@@ -27,7 +27,18 @@
     elseif ($option == 2) {
         echo("<h3>Remover local</h3>");
         echo("<form action=\"a.php?tipo=2\" method=\"post\">");
-        echo("<p>Morada a remover: <input type=\"text\" name=\"moradalocal\"/></p>");
+
+        $sql = "SELECT moradalocal FROM localidade ORDER BY localidade ASC";
+        $result = $db->prepare($sql);
+        $result->execute();
+
+        /* COMBO BOX PARA ESCOLHER MORADA*/
+        echo ("<p>Morada a remover: ");
+        echo("<select type=\"text\" name=\"moradalocal\">\n");
+        foreach($result as $row) {
+            echo("<option value='{$row['moradalocal']}'>{$row['moradalocal']}</option></p>");
+        }
+        echo("</select>\n");
         echo("<p><input type=\"submit\" value=\"Submit\"/></p></form>\n");
     }
 

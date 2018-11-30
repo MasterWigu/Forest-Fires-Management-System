@@ -43,7 +43,7 @@
         echo("<p>ERROR: {$e->getMessage()}</p>");
     }
 ?>
-        <br>
+        <br><br>
         <button onclick="location.href = 'menu.php';">Voltar</button>
     </body>
 </html>

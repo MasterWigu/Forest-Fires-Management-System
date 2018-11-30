@@ -3,16 +3,6 @@
 	<body>
 <?php
 
-	function parseentidademeio($entidademeio) {
-		$array = explode(',', $entidademeio);
-
-
-
-	}
-
-
-
-
 	$tipo = $_REQUEST['tipo'];
 
 	try {
@@ -23,6 +13,7 @@
 		$dbname = $user;
 		$db = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$db->beginTransaction();
 
 
 		if ($tipo == 1) { #adicionar combate
@@ -181,12 +172,13 @@
 			
 		}
 
-
+		$db->commit();
 		$db = null;
 	}
 
 	catch (PDOException $e)
 	{
+		$db->rollBack();
 		echo("<p>ERROR: {$e->getMessage()}</p>");
 
 		echo("<p></p>");
@@ -198,7 +190,7 @@
 	}
 
 ?>
-	<br>
+	<br><br>
     <button onclick="location.href = 'menu.php';">Voltar</button>
 </body>
 </html>

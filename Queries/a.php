@@ -52,24 +52,26 @@
 		$dbname = $user;
 		$db = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$db->beginTransaction();
 
 
 		if ($tipo == 1) {
 			$moradalocal = $_REQUEST['moradalocal'];
+
 		
 			$sql = "INSERT INTO localidade VALUES (:moradalocal)";
 
 			$result = $db->prepare($sql);
 			$result->execute([':moradalocal' => $moradalocal]);
 
-			echo("Morada adicionada");
+
+			echo("{$moradalocal} foi adicionada a lista de localidades.");
 		}
 
 
 		elseif ($tipo == 2) {
-
-
 			$moradalocal = $_REQUEST['moradalocal'];
+
 
 			$sql = "SELECT DISTINCT numtelefone, instantechamada FROM eventoemergencia WHERE moradalocal = :moradalocal";
 
@@ -85,7 +87,7 @@
 			$result = $db->prepare($sql);
 			$result->execute([':moradalocal' => $moradalocal]);
 
-			echo("Morada removida");
+			echo("{$moradalocal} foi removida da lista de localidades.");
 		}
 
 
@@ -96,10 +98,12 @@
 			$moradaLocal = $_REQUEST['moradalocal'];
 			$numprocessosocorro = $_REQUEST['numprocessosocorro'];
 
+
 			$sql = "INSERT INTO eventoemergencia VALUES (:numtelefone, :instantechamada, :nomepessoa, :moradalocal, :numprocessosocorro)";
 
 			$result = $db->prepare($sql);
 			$result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada, ':nomepessoa' => $nomepessoa,':moradalocal' => $moradalocal, ':numprocessosocorro' => $numprocessosocorro]);
+
 
 			echo("Evento de emergencia adicionado");
 		}
@@ -108,7 +112,9 @@
 		elseif ($tipo == 4) {
 			$numtelefone = $_REQUEST['numtelefone'];
 			$instantechamada = $_REQUEST['instantechamada'];
+
 			deleteevento($numtelefone, $instantechamada, $db);
+
 
 			echo("Evento de emergencia removido");
 		}
@@ -122,38 +128,54 @@
 			$numtelefone = $array_tel_inst[0];
 			$instantechamada = $array_tel_inst[1];
 
+
 			$sql = "SELECT numprocessosocorro FROM eventoemergencia WHERE numtelefone = :numtelefone AND instantechamada = :instantechamada";
 
             $result = $db->prepare($sql);
             $result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
 
             if ($result->fetch()['numprocessosocorro'] == null) { // se estiver a null nao ha nenhum processo de socorro
+            	$sql = "SELECT * FROM processosocorro WHERE numprocessosocorro = :numprocessosocorro";
 
-				$sql = "INSERT INTO processosocorro VALUES (:numprocessosocorro)";
-				$result = $db->prepare($sql);
-				$result->execute([':numprocessosocorro' => $numprocessosocorro]);
+            	$result = $db->prepare($sql);
+            	$result->execute([':numprocessosocorro' => $numprocessosocorro]);
+
+            	if ($result->rowCount() == 0) {
+                	$sql = "INSERT INTO processosocorro VALUES (:numprocessosocorro)";
+                	$result = $db->prepare($sql);
+                	$result->execute([':numprocessosocorro' => $numprocessosocorro]);
+            	
+
+					$sql = "UPDATE eventoemergencia SET numprocessosocorro = :numprocessosocorro WHERE numtelefone = :numtelefone AND instantechamada = :instantechamada";
+					$result = $db->prepare($sql);
+					$result->execute([':numprocessosocorro' => $numprocessosocorro, ':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
+
+					echo("Processo de socorro adicionado ao(s) evento(s) de emergencia que o originou(aram)");
+				}
+				else {
+					echo("O numero de processo de socorro inserido ja existe");
+				}
 
 
-				$sql = "UPDATE eventoemergencia SET numprocessosocorro = :numprocessosocorro WHERE numtelefone = :numtelefone AND instantechamada = :instantechamada";
-				$result = $db->prepare($sql);
-				$result->execute([':numprocessosocorro' => $numprocessosocorro, ':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
-
-				echo("Processo de socorro adicionado ao(s) evento(s) de emergencia que o originou(aram)");
 			}
 			else {
+
 				echo("O evento de emergencia selecionado ja possui um processo de socorro associado");
 			}
+
 		}
 
 
 		elseif ($tipo == 6) {
 			$numprocessosocorro = $_REQUEST['numprocessosocorro'];
+
 			$sql = "DELETE FROM processosocorro WHERE numprocessosocorro = :numprocessosocorro";
 
 			$result = $db->prepare($sql);
 			$result->execute([':numprocessosocorro' => $numprocessosocorro]);
 
-			echo("Processo de socorro removido");
+
+			echo("Processo de socorro numero {$numprocessosocorro} removido");
 
 		}
 
@@ -161,6 +183,7 @@
 		elseif ($tipo == 7) {
 			$nomemeio = $_REQUEST['nomemeio'];
 			$nomeentidade = $_REQUEST['nomeentidade'];
+
 
 			$nummeio = "SELECT MAX(nummeio) FROM meio WHERE nomeentidade = :nomeentidade";
 			$result = $db->prepare($nummeio);
@@ -174,7 +197,8 @@
 			$result = $db->prepare($sql);
 			$result->execute(['nummeio' => $nummeio + 1, 'nomemeio' => $nomemeio, ':nomeentidade' => $nomeentidade]);
 
-			echo("Meio adicionado");			
+
+			echo("Meio numero {$nummeio} da entidade {$nomeentidade} adicionado com sucesso a lista de meios.");		
 		}
 
 
@@ -182,22 +206,26 @@
 			$nummeio = $_REQUEST['nummeio'];
 			$nomeentidade = $_REQUEST['nomeentidade'];
 
+
 			$sql = "DELETE FROM meio WHERE nomeentidade = :nomeentidade AND nummeio = :nummeio";
 
 			$result = $db->prepare($sql);
 			$result->execute([':nomeentidade' => $nomeentidade, 'nummeio' => $nummeio]);
 
-			echo("Meio removido");
+
+			echo("Meio numero {$nummeio} da entidade {$nomeentidade} removido com sucesso da lista de meios.");
 		}
 
 
 		elseif ($tipo == 9) {
 			$nomeentidade = $_REQUEST['nomeentidade'];
 
+
 			$sql = "INSERT INTO entidademeio VALUES (:nomeentidade)";
 
 			$result = $db->prepare($sql);
 			$result->execute([':nomeentidade' => $nomeentidade]);
+
 
 			echo("Entidade adicionada");
 		}
@@ -206,20 +234,23 @@
 		else {
 			$nomeentidade = $_REQUEST['nomeentidade'];
 
+
 			$sql = "DELETE FROM entidademeio WHERE nomeentidade = :nomeentidade";
 
 			$result = $db->prepare($sql);
 			$result->execute([':nomeentidade' => $nomeentidade]);
 
+
 			echo("Entidade removida");
 		}
 
-
+		$db->commit();
 		$db = null;
 	}
 
 	catch (PDOException $e)
 	{
+		$db->rollBack();
 		echo("<p>ERROR: {$e->getMessage()}</p>");
 
 		echo("<p></p>");
@@ -231,7 +262,7 @@
 	}
 
 ?>
-	<br>
+	<br><br>
     <button onclick="location.href = 'menu.php';">Voltar</button>
 </body>
 </html>

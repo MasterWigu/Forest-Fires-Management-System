@@ -10,6 +10,7 @@
         $dbname = $user;
         $db = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $db->beginTransaction();
 
         if ($tipo == 1) {
 
@@ -33,44 +34,27 @@
             $numtelefone = $array_tel_inst[0];
             $instantechamada = $array_tel_inst[1];
 
-            $sql = "SELECT * FROM processosocorro WHERE numprocessosocorro = :numprocessosocorro";
+            #podemos assumir que os dados de input estao sempre correctos porque vem de combobox
+            #(numprocessosocorro ja existente e eventoemergencia sem processo de socorro associado)
+            $sql = "UPDATE eventoemergencia SET numprocessosocorro = :numprocessosocorro WHERE numtelefone = :numtelefone AND instantechamada = :instantechamada";
 
             $result = $db->prepare($sql);
-            $result->execute([':numprocessosocorro' => $numprocessosocorro]);
+            $result->execute([':numprocessosocorro' => $numprocessosocorro, ':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
 
-            if ($result->rowCount() == 0) {
-                $sql = "INSERT INTO processosocorro VALUES (:numprocessosocorro)";
-                $result = $db->prepare($sql);
-                $result->execute([':numprocessosocorro' => $numprocessosocorro]);
-            }
+            echo("Numero de processo de socorro associado ao evento de emergencia");
 
-            $sql = "SELECT numprocessosocorro FROM eventoemergencia WHERE numtelefone = :numtelefone AND instantechamada = :instantechamada";
-
-            $result = $db->prepare($sql);
-            $result->execute([':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
-
-            if ($result->fetch()['numprocessosocorro'] == null) {
-                $sql = "UPDATE eventoemergencia SET numprocessosocorro = :numprocessosocorro WHERE numtelefone = :numtelefone AND instantechamada = :instantechamada";
-
-                $result = $db->prepare($sql);
-                $result->execute([':numprocessosocorro' => $numprocessosocorro, ':numtelefone' => $numtelefone, ':instantechamada' => $instantechamada]);
-
-                echo("Numero de processo de socorro associado ao evento de emergencia");
-
-            } else {
-                echo("O evento de emergencia selecionado ja possui um numero de processo de socorro");
-            }
         }
 
-
+        $db->commit();
         $db = null;
     }
     catch (PDOException $e)
     {
+        $db->rollBack();
         echo("<p>ERROR: {$e->getMessage()}</p>");
     }
 ?>
-    <br>
+    <br><br>
     <button onclick="location.href = 'menu.php';">Voltar</button>
     </body>
 </html>

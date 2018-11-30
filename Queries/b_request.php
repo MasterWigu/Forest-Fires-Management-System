@@ -15,7 +15,8 @@
     if ($option == 1) {
         echo("<form action=\"b.php?tipo=1\" method=\"post\">");
 
-        $sql = "SELECT nummeio, nomeentidade FROM meio";
+        #left outer join -> apenas retorna meios que nao estao em meiocombate
+        $sql = "SELECT m.nummeio, m.nomeentidade FROM meio m LEFT JOIN meiocombate c ON m.nummeio = c.nummeio AND m.nomeentidade = c.nomeentidade  WHERE c.nummeio IS NULL OR c.nomeentidade IS NULL";
         $result = $db->prepare($sql);
         $result->execute();
 
@@ -76,7 +77,7 @@
     elseif ($option == 4) {
     	echo("<form action=\"b.php?tipo=4\" method=\"post\">");
 
-        $sql = "SELECT nummeio, nomeentidade FROM meio";
+        $sql = "SELECT m.nummeio, m.nomeentidade FROM meio m LEFT JOIN meioapoio a ON m.nummeio = a.nummeio AND m.nomeentidade = a.nomeentidade  WHERE a.nummeio IS NULL OR a.nomeentidade IS NULL";
         $result = $db->prepare($sql);
         $result->execute();
 
@@ -137,7 +138,7 @@
     elseif ($option == 7) {
         echo("<form action=\"b.php?tipo=7\" method=\"post\">");
 
-        $sql = "SELECT nummeio, nomeentidade FROM meio";
+        $sql = "SELECT m.nummeio, m.nomeentidade FROM meio m LEFT JOIN meiosocorro s ON m.nummeio = s.nummeio AND m.nomeentidade = s.nomeentidade  WHERE s.nummeio IS NULL OR s.nomeentidade IS NULL";
         $result = $db->prepare($sql);
         $result->execute();
 
