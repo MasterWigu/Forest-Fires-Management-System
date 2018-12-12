@@ -83,7 +83,6 @@ create table eventoEmergencia(
     UNIQUE(numTelefone, nomePessoa)
 );
 
-
 create table meio(
     numMeio int not null,
     nomeMeio varchar(80) not null,
