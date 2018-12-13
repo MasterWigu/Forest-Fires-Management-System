@@ -33,33 +33,15 @@ insert into d_meio (numMeio, nomeMeio, nomeEntidade, tipo) select numMeio, nomeM
 
 insert into d_meio (numMeio, nomeMeio, nomeEntidade, tipo) select numMeio, nomeMeio, nomeEntidade, 'Socorro' from meio natural join meioSocorro;
 
+insert into d_meio (numMeio, nomeMeio, nomeEntidade, tipo)
+ select numMeio, nomeMeio, nomeEntidade, null 
+ from meio where (numMeio, nomeEntidade) not in (
+  select * from meioCombate union
+  select * from meioSocorro union
+  select * from meioApoio)
 
-create or replace function insertmeionull()
-    returns void as $$
-    begin
-        if not exists (
-            select moradaLocal
-            from audita natural join eventoEmergencia natural join vigia
-            where idCoordenador = new.idCoordenador
-                and numCamara = new.numCamara
-        ) then
-            raise exception 'Merda1';
-        end if;
-        return new;
-    end;
-$$ language plpgsql;
 
-insert into d_meio (numMeio, nomeMeio, nomeEntidade, tipo) select numMeio, nomeMeio, nomeEntidade, null from meio
- where (numMeio, nomeEntidade) not in (
-  meioSocorro s 
-  full outer join meioApoio a
-    on s.numMeio = a.numMeio
-    and s.nomeEntidade = a.nomeEntidade
-  full outer join meioCombate c
-    on a.numMeio = c.numMeio
-    and a.nomeEntidade = c.nomeEntidade);
 
-/*
 create table temp (
   int numTelefone not null,
   timestamp instanteChamada not null,
@@ -72,6 +54,6 @@ select numTelefone, instanteChamada, numMeio, nomeEntidade, 'apoio' into temp fr
 select numTelefone, instanteChamada, numMeio, nomeEntidade, 'socorro' into temp from eventoemergencia natural join transporta;
 
 
-insert into d_junta (idMeio, idEvento, dia, mes, ano) values (select )*/
+insert into d_junta (idMeio, idEvento, dia, mes, ano) values (select )
 
 

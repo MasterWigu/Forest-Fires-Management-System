@@ -25,10 +25,12 @@ create table d_evento(
 );
 
 create table d_tempo(
+    idTempo serial,
     dia int not null,
     mes int not null,
     ano int not null,
-    constraint pk_d_tempo primary key(dia, mes, ano)
+    constraint pk_d_tempo primary key(idTempo),
+    UNIQUE(dia, mes, ano)
 );
 
 

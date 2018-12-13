@@ -1424,7 +1424,6 @@ insert into meio values (5, 'Meio 5', 'Entidade 99');
 
 
 insert into meioCombate values (0, 'Entidade 1');
-insert into meioCombate values (0, 'Entidade 10');
 insert into meioCombate values (4, 'Entidade 90');
 insert into meioCombate values (0, 'Entidade 20');
 insert into meioCombate values (2, 'Entidade 43');
