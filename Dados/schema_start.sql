@@ -36,10 +36,8 @@ create table d_tempo(
 
 
 create table d_junta(
+    idTempo int not null,
     idEvento int not null,
     idMeio int not null,
-    dia int not null,
-    mes int not null,
-    ano int not null,
-    constraint pk_d_junta primary key(idEvento, idMeio, dia, mes, ano)
+    constraint pk_d_junta primary key(idTempo, idEvento, idMeio)
 );
