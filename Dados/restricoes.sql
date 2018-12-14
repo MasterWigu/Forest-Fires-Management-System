@@ -1,9 +1,6 @@
 /* restrições de integridade*/
 
 /* a */
-create trigger update_solicita_trigger before insert on solicita
-  for each row execute procedure update_solicita();
-
 create or replace function update_solicita()
   returns trigger as $$
   begin
@@ -19,10 +16,10 @@ create or replace function update_solicita()
   end;
   $$ language plpgsql;
 
-/* b */
-create trigger update_alocado_trigger before insert on alocado
-  for each row execute procedure update_alocado();
+create trigger update_solicita_trigger before insert on solicita
+  for each row execute procedure update_solicita();
 
+/* b */
 create or replace function update_alocado()
   returns trigger as $$
   begin
@@ -38,3 +35,8 @@ create or replace function update_alocado()
     return new
   end;
   $$ language plpgsql;
+
+
+create trigger update_alocado_trigger before insert on alocado
+  for each row execute procedure update_alocado();
+  
