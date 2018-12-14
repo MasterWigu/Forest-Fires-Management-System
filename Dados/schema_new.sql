@@ -122,7 +122,7 @@ create table transporta(
     constraint fk_eventoEmergencia_processoSocorro foreign key(numProcessoSocorro) references processoSocorro(numProcessoSocorro) on delete cascade
 );
 
-create table alocado( 
+create table alocado(
     numMeio int not null,
     nomeEntidade varchar(80) not null,
     numHoras int not null,
@@ -185,7 +185,7 @@ create or replace function update_solicita()
             where idCoordenador = new.idCoordenador
                 and numCamara = new.numCamara
         ) then
-            raise exception 'Merda1';
+            raise exception 'Erro';
         end if;
         return new;
     end;
@@ -196,8 +196,6 @@ create trigger update_solicita_trigger before insert on solicita
 
 
 /* b */
-
-/*imprimir a dizer que não pode ser alocado; imprimir a dizer que foi alocado */
 create or replace function update_alocado()
     returns trigger as $$
     begin
@@ -208,7 +206,7 @@ create or replace function update_alocado()
             and acciona.nomeEntidade = new.nomeEntidade
             and acciona.numProcessoSocorro = new.numProcessoSocorro
         ) then
-            raise exception 'Merda2';
+            raise exception 'Erro';
         end if;
         return new;
     end;
@@ -216,6 +214,3 @@ $$ language plpgsql;
 
 create trigger update_alocado_trigger before insert on alocado
   for each row execute procedure update_alocado();
-
-
-

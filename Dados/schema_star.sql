@@ -4,8 +4,6 @@ drop table d_tempo cascade;
 drop table d_junta cascade;
 
 
-
-
 create table d_meio(
     idMeio serial,
     numMeio int not null,
@@ -32,7 +30,6 @@ create table d_tempo(
     constraint pk_d_tempo primary key(idTempo),
     UNIQUE(dia, mes, ano)
 );
-
 
 
 create table d_junta(

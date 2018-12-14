@@ -13,7 +13,7 @@ create or replace function update_solicita()
       where audita.idCoordenador = new.idCoordenador
         and audita.numCamara = new.numCamara
     )
-      raise exception "Merda";
+      raise exception "Erro";
     end if;
     return new;
   end;
@@ -22,7 +22,7 @@ create or replace function update_solicita()
 /* b */
 create trigger update_alocado_trigger before insert on alocado
   for each row execute procedure update_alocado();
-/*imprimir a dizer que não pode ser alocado; imprimir a dizer que foi alocado */
+
 create or replace function update_alocado()
   returns trigger as $$
   begin
@@ -33,7 +33,7 @@ create or replace function update_alocado()
         and acciona.nomeEntidade = new.nomeEntidade
         and acciona.numProcessoSocorro = new.numProcessoSocorro
     )
-      raise exception "Merda";
+      raise exception "Erro";
     end if;
     return new
   end;
