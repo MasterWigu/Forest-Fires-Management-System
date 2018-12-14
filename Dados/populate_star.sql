@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION populateTempo()
+CREATE OR REPLACE FUNCTION populated_tempo()
   RETURNS VOID AS $$
   DECLARE
     date DATE;
@@ -17,7 +17,7 @@ CREATE OR REPLACE FUNCTION populateTempo()
   $$ LANGUAGE plpgsql;
 
 
-SELECT populateTempo();
+SELECT populated_tempo();
 
 
 insert into d_evento (numTelefone, instanteChamada) select numTelefone, instanteChamada from eventoEmergencia;
